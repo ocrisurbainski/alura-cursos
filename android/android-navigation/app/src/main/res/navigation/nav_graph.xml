@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listaProdutosFragment">
+
+    <fragment
+        android:id="@+id/listaProdutosFragment"
+        android:name="br.com.alura.aluraesporte.ui.fragment.ListaProdutosFragment"
+        tools:layout="@layout/lista_produtos"
+        android:label="ListaProdutosFragment">
+        <action
+            android:id="@+id/action_listaProdutosFragment_to_detalhesProdutoFragment"
+            app:destination="@id/detalhesProdutoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detalhesProdutoFragment"
+        android:name="br.com.alura.aluraesporte.ui.fragment.DetalhesProdutoFragment"
+        tools:layout="@layout/detalhes_produto"
+        android:label="DetalhesProdutoFragment" >
+        <action
+            android:id="@+id/action_detalhesProdutoFragment_to_pagamentoFragment"
+            app:destination="@id/pagamentoFragment" />
+        <argument android:name="produtoId"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/pagamentoFragment"
+        android:name="br.com.alura.aluraesporte.ui.fragment.PagamentoFragment"
+        tools:layout="@layout/pagamento"
+        android:label="PagamentoFragment" >
+        <action
+            android:id="@+id/action_pagamentoFragment_to_listaProdutosFragment"
+            app:destination="@id/listaProdutosFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/nav_graph" />
+        <argument android:name="produtoId"
+            app:argType="long" />
+    </fragment>
+
+</navigation>
