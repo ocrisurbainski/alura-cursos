@@ -149,13 +149,13 @@ class FormularioNotaFragment : Fragment() {
 
     private fun appBarParaCriacao() = ComponentesVisuais(appBar = AppBar(titulo = "Criando nota"))
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.formulario_nota_menu, menu)
+        inflater.inflate(R.menu.formulario_nota_menu, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.formulario_nota_menu_salva) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.formulario_nota_menu_salva) {
             val notaCriada = criaNota()
             salva(notaCriada)
         }
