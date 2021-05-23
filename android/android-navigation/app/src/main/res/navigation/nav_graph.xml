@@ -9,7 +9,7 @@
         android:id="@+id/listaProdutosFragment"
         android:name="br.com.alura.aluraesporte.ui.fragment.ListaProdutosFragment"
         tools:layout="@layout/lista_produtos"
-        android:label="ListaProdutosFragment">
+        android:label="@string/lista_produto">
         <action
             android:id="@+id/action_listaProdutosFragment_to_detalhesProdutoFragment"
             app:destination="@id/detalhesProdutoFragment" />
@@ -19,26 +19,58 @@
         android:id="@+id/detalhesProdutoFragment"
         android:name="br.com.alura.aluraesporte.ui.fragment.DetalhesProdutoFragment"
         tools:layout="@layout/detalhes_produto"
-        android:label="DetalhesProdutoFragment" >
+        android:label="@string/detalhes_produto" >
         <action
             android:id="@+id/action_detalhesProdutoFragment_to_pagamentoFragment"
             app:destination="@id/pagamentoFragment" />
-        <argument android:name="produtoId"
-            app:argType="long" />
+        <argument android:name="produtoId" app:argType="long" />
     </fragment>
 
     <fragment
         android:id="@+id/pagamentoFragment"
         android:name="br.com.alura.aluraesporte.ui.fragment.PagamentoFragment"
         tools:layout="@layout/pagamento"
-        android:label="PagamentoFragment" >
+        android:label="@string/pagamento" >
         <action
             android:id="@+id/action_pagamentoFragment_to_listaProdutosFragment"
             app:destination="@id/listaProdutosFragment"
-            app:launchSingleTop="false"
-            app:popUpTo="@id/nav_graph" />
-        <argument android:name="produtoId"
-            app:argType="long" />
+            app:popUpTo="@id/listaProdutosFragment"
+            app:popUpToInclusive="true" />
+        <argument android:name="produtoId" app:argType="long" />
     </fragment>
+
+    <action android:id="@+id/action_global_loginFragment"
+        app:destination="@id/login_graph"
+        app:popUpTo="@id/listaProdutosFragment"
+        app:popUpToInclusive="true" />
+
+    <navigation android:id="@+id/login_graph"
+        app:startDestination="@id/loginFragment">
+        <fragment
+            android:id="@+id/cadastroUsuarioFragment"
+            android:name="br.com.alura.aluraesporte.ui.fragment.CadastroUsuarioFragment"
+            android:label="@string/cadastro_usuario"
+            tools:layout="@layout/cadastro_usuario" />
+        <fragment
+            android:id="@+id/loginFragment"
+            android:name="br.com.alura.aluraesporte.ui.fragment.LoginFragment"
+            android:label="@string/login"
+            tools:layout="@layout/login">
+            <action
+                android:id="@+id/action_loginFragment_to_listaProdutosFragment"
+                app:destination="@id/listaProdutosFragment"
+                app:popUpTo="@id/loginFragment"
+                app:popUpToInclusive="true" />
+            <action
+                android:id="@+id/action_loginFragment_to_cadastroUsuarioFragment"
+                app:destination="@id/cadastroUsuarioFragment" />
+        </fragment>
+    </navigation>
+
+    <fragment
+        android:id="@+id/listaPagamentosFragment"
+        android:name="br.com.alura.aluraesporte.ui.fragment.ListaPagamentosFragment"
+        android:label="@string/lista_pagamento"
+        tools:layout="@layout/lista_pagamentos"/>
 
 </navigation>

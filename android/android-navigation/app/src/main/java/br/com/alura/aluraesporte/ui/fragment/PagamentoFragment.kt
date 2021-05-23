@@ -5,22 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import br.com.alura.aluraesporte.R
+import br.com.alura.aluraesporte.databinding.PagamentoBinding
 import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
 import br.com.alura.aluraesporte.model.Pagamento
 import br.com.alura.aluraesporte.model.Produto
 import br.com.alura.aluraesporte.ui.viewmodel.PagamentoViewModel
-import kotlinx.android.synthetic.main.pagamento.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 private const val COMPRA_REALIZADA = "Compra realizada"
 private const val FALHA_AO_CRIAR_PAGAMENTO = "Falha ao criar pagamento"
 
-class PagamentoFragment : Fragment() {
+class PagamentoFragment : UsuarioLogadoFragment() {
 
     private val pagamentoFragmentArgs by navArgs<PagamentoFragmentArgs>()
     private val produtoId by lazy {
@@ -28,18 +25,17 @@ class PagamentoFragment : Fragment() {
     }
     private val viewModel: PagamentoViewModel by viewModel()
     private lateinit var produtoEscolhido: Produto
-    private val navController by lazy { findNavController() }
+    private lateinit var binding: PagamentoBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(
-            R.layout.pagamento,
-            container,
-            false
-        )
+
+        binding = PagamentoBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,14 +48,13 @@ class PagamentoFragment : Fragment() {
         viewModel.buscaProdutoPorId(produtoId).observe(this, Observer {
             it?.let { produtoEncontrado ->
                 produtoEscolhido = produtoEncontrado
-                pagamento_preco.text = produtoEncontrado.preco
-                    .formatParaMoedaBrasileira()
+                binding.pagamentoPreco.text = produtoEncontrado.preco.formatParaMoedaBrasileira()
             }
         })
     }
 
     private fun configuraBotaoConfirmaPagamento() {
-        pagamento_botao_confirma_pagamento.setOnClickListener {
+        binding.pagamentoBotaoConfirmaPagamento.setOnClickListener {
             criaPagamento()?.let(this::salva) ?: Toast.makeText(
                 context,
                 FALHA_AO_CRIAR_PAGAMENTO,
@@ -85,12 +80,12 @@ class PagamentoFragment : Fragment() {
     }
 
     private fun criaPagamento(): Pagamento? {
-        val numeroCartao = pagamento_numero_cartao
-            .editText?.text.toString()
-        val dataValidade = pagamento_data_validade
-            .editText?.text.toString()
-        val cvc = pagamento_cvc
-            .editText?.text.toString()
+        val numeroCartao = binding.pagamentoNumeroCartao.editText?.text.toString()
+
+        val dataValidade = binding.pagamentoDataValidade.editText?.text.toString()
+
+        val cvc = binding.pagamentoCvc.editText?.text.toString()
+
         return geraPagamento(numeroCartao, dataValidade, cvc)
     }
 

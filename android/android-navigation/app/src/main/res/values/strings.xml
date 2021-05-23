@@ -5,4 +5,18 @@
     <string name="numero_cartao">Número cartão</string>
     <string name="numero_cvc">CVC</string>
     <string name="confirmar_pagamento">Confirmar pagamento</string>
+    <string name="sair_app">Sair do app</string>
+    <string name="login">Login</string>
+    <string name="pagamento">Pagamento</string>
+    <string name="detalhes_produto">Detalhes do produto</string>
+    <string name="lista_produto">Lista de produtos</string>
+    <string name="cadastro_usuario">Cadastro usuário</string>
+    <string name="cadastrar_usuario">Cadastrar usuário</string>
+    <string name="lista_pagamento">Lista de pagamentos</string>
+    <string name="id_do_usuario">Id do usuário</string>
+    <string name="senha">Senha</string>
+    <string name="logar">Logar</string>
+    <string name="produtos">Produtos</string>
+    <string name="pagamentos">Pagamentos</string>
+    <string name="nenhum_pagamento_encontrado">Nenhum pagamento encontrado</string>
 </resources>

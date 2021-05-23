@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/menu_usuario_logado_sair_app"
+        android:title="@string/sair_app"
+        android:icon="@drawable/ic_action_sair_app"
+        app:showAsAction="always" />
+</menu>

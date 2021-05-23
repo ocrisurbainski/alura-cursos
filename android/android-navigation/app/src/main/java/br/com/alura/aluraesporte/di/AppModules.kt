@@ -1,5 +1,7 @@
 package br.com.alura.aluraesporte.di
 
+import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -7,15 +9,15 @@ import br.com.alura.aluraesporte.database.AppDatabase
 import br.com.alura.aluraesporte.database.dao.PagamentoDAO
 import br.com.alura.aluraesporte.database.dao.ProdutoDAO
 import br.com.alura.aluraesporte.model.Produto
+import br.com.alura.aluraesporte.repository.LoginRepository
 import br.com.alura.aluraesporte.repository.PagamentoRepository
 import br.com.alura.aluraesporte.repository.ProdutoRepository
 import br.com.alura.aluraesporte.ui.fragment.DetalhesProdutoFragment
 import br.com.alura.aluraesporte.ui.fragment.ListaProdutosFragment
 import br.com.alura.aluraesporte.ui.fragment.PagamentoFragment
+import br.com.alura.aluraesporte.ui.recyclerview.adapter.PagamentoAdapter
 import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProdutosAdapter
-import br.com.alura.aluraesporte.ui.viewmodel.DetalhesProdutoViewModel
-import br.com.alura.aluraesporte.ui.viewmodel.PagamentoViewModel
-import br.com.alura.aluraesporte.ui.viewmodel.ProdutosViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -70,11 +72,19 @@ val databaseModule = module {
     }
 }
 
+val genericModule = module {
+    single<SharedPreferences> { PreferenceManager.getDefaultSharedPreferences(get()) }
+}
+
 val daoModule = module {
     single<ProdutoDAO> { get<AppDatabase>().produtoDao() }
     single<PagamentoDAO> { get<AppDatabase>().pagamentoDao() }
+}
+
+val repositoryModule = module {
     single<ProdutoRepository> { ProdutoRepository(get()) }
     single<PagamentoRepository> { PagamentoRepository(get()) }
+    single<LoginRepository> { LoginRepository(get()) }
 }
 
 val uiModule = module {
@@ -82,10 +92,13 @@ val uiModule = module {
     factory<ListaProdutosFragment> { ListaProdutosFragment() }
     factory<PagamentoFragment> { PagamentoFragment() }
     factory<ProdutosAdapter> { ProdutosAdapter(get()) }
+    factory<PagamentoAdapter> { PagamentoAdapter(get()) }
 }
 
 val viewModelModule = module {
     viewModel<ProdutosViewModel> { ProdutosViewModel(get()) }
     viewModel<DetalhesProdutoViewModel> { (id: Long) -> DetalhesProdutoViewModel(id, get()) }
     viewModel<PagamentoViewModel> { PagamentoViewModel(get(), get()) }
+    viewModel<LoginViewModel> { LoginViewModel(get()) }
+    viewModel<EstadoAppViewModel> { EstadoAppViewModel() }
 }
