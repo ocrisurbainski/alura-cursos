@@ -1,20 +1,18 @@
 package br.com.alura.leilao.ui;
 
-import android.support.v7.widget.RecyclerView;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import br.com.alura.leilao.database.dao.UsuarioDAO;
 import br.com.alura.leilao.model.Usuario;
 import br.com.alura.leilao.ui.recyclerview.adapter.ListaUsuarioAdapter;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import android.support.v7.widget.RecyclerView;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AtualizadorDeUsuarioTest {
@@ -27,7 +25,8 @@ public class AtualizadorDeUsuarioTest {
     private RecyclerView recyclerView;
 
     @Test
-    public void deve_AtualizarListaDeUsuario_QuandoSalvarUsuario(){
+    public void deve_AtualizarListaDeUsuario_QuandoSalvarUsuario() {
+
         AtualizadorDeUsuario atualizador = new AtualizadorDeUsuario(
                 dao,
                 adapter,

@@ -1,5 +1,12 @@
 package br.com.alura.leilao.api;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -18,14 +25,6 @@ import br.com.alura.leilao.model.Leilao;
 import br.com.alura.leilao.model.Usuario;
 import br.com.alura.leilao.ui.dialog.AvisoDialogManager;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-
 @RunWith(MockitoJUnitRunner.class)
 public class EnviadorDeLanceTest {
 
@@ -40,6 +39,7 @@ public class EnviadorDeLanceTest {
 
     @Test
     public void deve_MostrarMensagemDeFalha_QuandoLanceForMenorQueUltimoLance() {
+
         EnviadorDeLance enviador = new EnviadorDeLance(
                 client,
                 listener,
@@ -55,6 +55,7 @@ public class EnviadorDeLanceTest {
 
     @Test
     public void deve_MostrarMensagemDeFalha_QuandoUsuarioComCincoDerNovoLance() {
+
         EnviadorDeLance enviador = new EnviadorDeLance(
                 client,
                 listener,
@@ -70,6 +71,7 @@ public class EnviadorDeLanceTest {
 
     @Test
     public void deve_MostrarMensagemDeFalha_QuandoOUsuarioDoUltimoLanceDerNovoLance() {
+
         EnviadorDeLance enviador = new EnviadorDeLance(
                 client,
                 listener,
@@ -85,6 +87,7 @@ public class EnviadorDeLanceTest {
 
     @Test
     public void deve_MostraMensagemDeFalha_QuandoFalharEnvioDeLanceParaAPI() {
+
         EnviadorDeLance enviador = new EnviadorDeLance(
                 client,
                 listener,
@@ -92,6 +95,7 @@ public class EnviadorDeLanceTest {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
+
                 RespostaListener<Void> argument = invocation.getArgument(2);
                 argument.falha("");
                 return null;
@@ -110,6 +114,7 @@ public class EnviadorDeLanceTest {
 
     @Test
     public void deve_NotificarLanceProcessado_QuandoEnviarLanceParaAPIComSucesso() {
+
         EnviadorDeLance enviador = new EnviadorDeLance(
                 client,
                 listener,
@@ -117,6 +122,7 @@ public class EnviadorDeLanceTest {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
+
                 RespostaListener<Void> argument = invocation.getArgument(2);
                 argument.sucesso(any(Void.class));
                 return null;

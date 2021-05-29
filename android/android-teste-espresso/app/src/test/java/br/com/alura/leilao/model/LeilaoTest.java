@@ -1,14 +1,5 @@
 package br.com.alura.leilao.model;
 
-import org.hamcrest.Matchers;
-import org.junit.Test;
-
-import java.util.List;
-
-import br.com.alura.leilao.exception.LanceMenorQueUltimoLanceException;
-import br.com.alura.leilao.exception.LanceSeguidoDoMesmoUsuarioException;
-import br.com.alura.leilao.exception.UsuarioJaDeuCincoLancesException;
-
 import static org.hamcrest.CoreMatchers.both;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -16,6 +7,15 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+
+import java.util.List;
+
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
+import br.com.alura.leilao.exception.LanceMenorQueUltimoLanceException;
+import br.com.alura.leilao.exception.LanceSeguidoDoMesmoUsuarioException;
+import br.com.alura.leilao.exception.UsuarioJaDeuCincoLancesException;
 
 public class LeilaoTest {
 
