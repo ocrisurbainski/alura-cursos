@@ -14,8 +14,8 @@ import br.com.alura.leilao.model.Usuario;
 
 public class NovoUsuarioDialog {
 
-    private static final String TITULO = "Novo usuário";
-    private static final String DESCRICAO_BOTAO_POSITIVO = "Adicionar";
+    public static final String TITULO = "Novo usuário";
+    public static final String DESCRICAO_BOTAO_POSITIVO = "Adicionar";
     private final Context context;
     private final UsuarioCriadoListener listener;
 

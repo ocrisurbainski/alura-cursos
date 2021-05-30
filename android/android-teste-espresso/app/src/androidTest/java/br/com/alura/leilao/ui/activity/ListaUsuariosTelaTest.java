@@ -17,14 +17,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import br.com.alura.leilao.BuildConfig;
 import br.com.alura.leilao.R;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 
-public class ListaUsuariosTelaTest {
+public class ListaUsuariosTelaTest extends BaseTest {
 
     @Rule
     public ActivityTestRule<ListaLeilaoActivity> mainActivity = new ActivityTestRule<>(ListaLeilaoActivity.class);
@@ -38,43 +35,26 @@ public class ListaUsuariosTelaTest {
     @Test
     public void deve_AparecerUsuarioNaListaDeUsuarios_QuandoCadastrarUmUsuario() {
 
-        onView(allOf(withId(R.id.lista_leilao_menu_usuarios),
-                withContentDescription("Usuários"),
-                isDisplayed()))
+        onView(allOf(withId(R.id.lista_leilao_menu_usuarios), withContentDescription("Usuários"), isDisplayed()))
                 .perform(click());
 
-        onView(allOf(withId(R.id.lista_usuario_fab_adiciona),
-                isDisplayed()))
-                .perform(click());
+        onView(allOf(withId(R.id.lista_usuario_fab_adiciona), isDisplayed())).perform(click());
 
-        onView(allOf(withId(R.id.form_usuario_nome),
-                isDisplayed()))
-                .perform(click());
+        onView(allOf(withId(R.id.form_usuario_nome), isDisplayed())).perform(click());
 
-        onView(allOf(withId(R.id.form_usuario_nome_edittext),
-                isDisplayed()))
+        onView(allOf(withId(R.id.form_usuario_nome_edittext), isDisplayed()))
                 .perform(replaceText("Alex"), closeSoftKeyboard());
 
-        onView(allOf(withId(android.R.id.button1),
-                withText("Adicionar"),
-                isDisplayed()))
+        onView(allOf(withId(android.R.id.button1), withText("Adicionar"), isDisplayed()))
                 .perform(scrollTo(), click());
 
-        onView(allOf(withId(R.id.item_usuario_id_com_nome),
-                isDisplayed()))
-                .check(matches(withText("(1) Alex")));
+        onView(allOf(withId(R.id.item_usuario_id_com_nome), isDisplayed())).check(matches(withText("(1) Alex")));
     }
 
     @After
     public void teardown() {
 
         limpaBancoDeDadosInterno();
-    }
-
-    private void limpaBancoDeDadosInterno() {
-
-        Context appContext = InstrumentationRegistry.getTargetContext();
-        appContext.deleteDatabase(BuildConfig.BANCO_DE_DADOS);
     }
 
 }

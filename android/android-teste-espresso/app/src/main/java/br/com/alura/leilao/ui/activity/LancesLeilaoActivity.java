@@ -117,9 +117,8 @@ public class LancesLeilaoActivity extends AppCompatActivity {
 
     private void adicionaMaioresLances(Leilao leilao) {
         StringBuilder sb = new StringBuilder();
-        for (Lance lance :
-                leilao.tresMaioresLances()) {
-            sb.append(lance.getValor())
+        for (Lance lance : leilao.tresMaioresLances()) {
+            sb.append(formatador.formata(lance.getValor()))
                     .append(" - ")
                     .append(lance.getUsuario())
                     .append("\n");

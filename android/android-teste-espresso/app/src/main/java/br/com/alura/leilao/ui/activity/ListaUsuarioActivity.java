@@ -15,7 +15,7 @@ import br.com.alura.leilao.ui.recyclerview.adapter.ListaUsuarioAdapter;
 
 public class ListaUsuarioActivity extends AppCompatActivity {
 
-    private static final String TITULO_APPBAR = "Usuários";
+    public static final String TITULO_APPBAR = "Usuários";
     private UsuarioDAO dao;
     private ListaUsuarioAdapter adapter;
     private RecyclerView recyclerView;
