@@ -12,6 +12,8 @@ export class PhotoListComponent implements OnInit {
 
     photos: Photo[] = [];
 
+    filter: string = '';
+
     constructor(
         private photoService: PhotoService,
         private activatedRoute: ActivatedRoute
@@ -24,7 +26,6 @@ export class PhotoListComponent implements OnInit {
     private loadPhotos() {
         
         const username = this.activatedRoute.snapshot.params['username'];
-        console.log(username);
 
         this.photoService.listFromUser(username).subscribe({
             next: (photos) => this.photos = photos,
