@@ -20,7 +20,7 @@ export class PhotoListResolver implements Resolve<Observable<Photo[]>> {
 
         const username = activatedRoute.params['username'];
 
-        return this.photoService.listFromUser(username);
+        return this.photoService.listFromUser(username, 1);
     }
 
 }
