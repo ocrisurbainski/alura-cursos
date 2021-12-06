@@ -1,12 +1,13 @@
 <div class="text-left mt-3 mb-3">
     <form>
         <input
+            #fieldfilter
             name="filter"
             class="rounded"
             type="search"
             placeholder="search..."
             autofocus
-            [(ngModel)]="filter">
+            (keyup)="debounce.next(fieldfilter.value)">
     </form>
 </div>
 
