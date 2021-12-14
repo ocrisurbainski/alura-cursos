@@ -7,7 +7,7 @@ import { LoadButtonComponent } from './load-button/load-button.component';
 import { FilterByDescriptionPipe } from './filter-by-description.pipe';
 import { PhotoModule } from '../photo/photo.module';
 import { CardModule } from 'src/app/shared/components/card/card.module';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { PhotoListFilterComponent } from './photo-list-filter/photo-list-filter.component';
 
 @NgModule({
 	declarations: [
@@ -15,6 +15,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 		PhotosComponent,
 		LoadButtonComponent,
 		FilterByDescriptionPipe,
+  		PhotoListFilterComponent,
 	],
 	imports: [
 		CommonModule,
