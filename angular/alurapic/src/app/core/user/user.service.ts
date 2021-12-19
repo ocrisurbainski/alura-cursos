@@ -11,6 +11,7 @@ export class UserService extends AbstractWindowLocalStorageService {
 
     private USER_KEY = 'user';
     private userSubject = new BehaviorSubject<User|null>(null);
+    private userName: string= '';
 
     constructor(
         private tokenService: TokenService) { 
@@ -22,13 +23,16 @@ export class UserService extends AbstractWindowLocalStorageService {
         const userJson = this.getItem(this.USER_KEY);
         
         if (userJson) {
-            this.userSubject.next(JSON.parse(userJson));
+            const user = JSON.parse(userJson);
+            this.userSubject.next(user);
+            this.userName = user.userName;
         }
     }
 
     saveUserLogged(user: User, token: string) {
         this.tokenService.setToken(token);
         this.setItem(this.USER_KEY, JSON.stringify(user));
+        this.userName = user.userName;
         this.userSubject.next(user);
     }
 
@@ -40,6 +44,14 @@ export class UserService extends AbstractWindowLocalStorageService {
         this.tokenService.removeToken();
         this.removeItem(this.USER_KEY);
         this.userSubject.next(null);
+    }
+
+    isLogged() {
+        return this.tokenService.hasToken();
+    }
+
+    getUserName() {
+        return this.userName;
     }
 
 }
