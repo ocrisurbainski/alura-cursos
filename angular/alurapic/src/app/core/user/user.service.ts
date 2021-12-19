@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { TokenService } from '../token/token.service';
 import { AbstractWindowLocalStorageService } from '../window-local-storage/abstract-window-local-storage-service';
 import { User } from './user';
 
@@ -11,7 +12,8 @@ export class UserService extends AbstractWindowLocalStorageService {
     private USER_KEY = 'user';
     private userSubject = new BehaviorSubject<User|null>(null);
 
-    constructor() { 
+    constructor(
+        private tokenService: TokenService) { 
         super();
         this.initUser();
     }
@@ -24,7 +26,8 @@ export class UserService extends AbstractWindowLocalStorageService {
         }
     }
 
-    saveUserLogged(user: User) {
+    saveUserLogged(user: User, token: string) {
+        this.tokenService.setToken(token);
         this.setItem(this.USER_KEY, JSON.stringify(user));
         this.userSubject.next(user);
     }
@@ -33,8 +36,10 @@ export class UserService extends AbstractWindowLocalStorageService {
         return this.userSubject.asObservable();
     }
 
-    clearUserLogged() {
+    logout() {
+        this.tokenService.removeToken();
         this.removeItem(this.USER_KEY);
+        this.userSubject.next(null);
     }
 
 }
