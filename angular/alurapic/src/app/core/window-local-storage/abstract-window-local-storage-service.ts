@@ -1,4 +1,4 @@
-export abstract class abstractWindowLocalStorageService {
+export abstract class AbstractWindowLocalStorageService {
 
     private localStorage: Storage;
 
@@ -6,15 +6,15 @@ export abstract class abstractWindowLocalStorageService {
         this.localStorage = window.localStorage;
     }
 
-    setItem(key: string, value: string | null) {
+    protected setItem(key: string, value: string | null) {
         localStorage.setItem(key, value!);
     }
 
-    getItem(key: string): string | null {
+    protected getItem(key: string): string | null {
         return this.localStorage.getItem(key);
     }
 
-    removeItem(key: string) {
+    protected removeItem(key: string) {
         this.localStorage.removeItem(key);
     }
 

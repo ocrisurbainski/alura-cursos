@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { abstractWindowLocalStorageService } from '../window-local-storage/abstract-window-local-storage-service';
+import { AbstractWindowLocalStorageService } from '../window-local-storage/abstract-window-local-storage-service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TokenService extends abstractWindowLocalStorageService {
+export class TokenService extends AbstractWindowLocalStorageService {
 
     private TOKEN_KEY = 'authToken';
 

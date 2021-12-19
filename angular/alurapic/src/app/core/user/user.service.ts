@@ -1,27 +1,36 @@
 import { Injectable } from '@angular/core';
-import { abstractWindowLocalStorageService } from '../window-local-storage/abstract-window-local-storage-service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { AbstractWindowLocalStorageService } from '../window-local-storage/abstract-window-local-storage-service';
+import { User } from './user';
 
 @Injectable({
     providedIn: 'root'
 })
-export class UserService extends abstractWindowLocalStorageService {
+export class UserService extends AbstractWindowLocalStorageService {
 
     private USER_KEY = 'user';
+    private userSubject = new BehaviorSubject<User|null>(null);
 
     constructor() { 
-        super(); 
+        super();
+        this.initUser();
     }
 
-    saveUserLogged(user: any) {
-        this.setItem(this.USER_KEY, JSON.stringify(user));
-    }
-
-    getUserLogged(): any {
-        var json = this.getItem(this.USER_KEY);
-        if (json) {
-            return JSON.parse(json);
+    private initUser() {
+        const userJson = this.getItem(this.USER_KEY);
+        
+        if (userJson) {
+            this.userSubject.next(JSON.parse(userJson));
         }
-        return null;
+    }
+
+    saveUserLogged(user: User) {
+        this.setItem(this.USER_KEY, JSON.stringify(user));
+        this.userSubject.next(user);
+    }
+
+    getUserLogged(): Observable<User|null> {
+        return this.userSubject.asObservable();
     }
 
     clearUserLogged() {
