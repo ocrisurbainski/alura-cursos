@@ -10,6 +10,7 @@ import { UserNotTakenValidatorService } from './user-not-taken.validator.service
 @Component({
     selector: 'app-signup',
     templateUrl: './signup.component.html',
+    providers: [UserNotTakenValidatorService],
 })
 export class SignupComponent implements OnInit, AfterViewInit {
 
