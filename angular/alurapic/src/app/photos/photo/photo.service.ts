@@ -17,4 +17,12 @@ export class PhotoService {
         return this.http.get<Photo[]>(`${environment.apiUrl}${username}/photos`, { params });
     }
 
+    upload(description: string, allowComments: boolean, fileBase64: string): Observable<any> {
+        const formData = new FormData();
+        formData.append('description', description);
+        formData.append('allowComments', allowComments.toString());
+        formData.append('imageFile', fileBase64);
+        return this.http.post(`${environment.apiUrl}photos/upload`, formData);
+    }
+
 }

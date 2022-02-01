@@ -1,1 +1,47 @@
-<p>photo-form works!</p>
+<div class="container">
+    <form [formGroup]="formGroup" class="row" (submit)="upload()">
+        <div class="col-md-6 text-center">
+            <div class="form-group" *ngIf="!preview; else previewImage">
+                <button immediateClick type="button" (click)="fileInput.click()" class="btn btn-primary">
+                    <i class="fa fa-image fa-4x align-middle"></i>
+                </button>
+                <input #fileInput
+                       formControlName="file" 
+                       (change)="onChangeFile($event)"
+                       type="file" 
+                       accept="image/*"
+                       hidden>
+                <app-vmessage text="Please, select a photo" *ngIf="formGroup.get('file')?.hasError('required')"></app-vmessage>
+            </div>
+            <ng-template #previewImage>
+                <div class="text-center">
+                    <app-photo [url]="preview" title="Preview"></ap-photo>>
+                </div>
+            </ng-template>
+        </div>
+  
+        <div class="col-md-6">
+            <div class="form-group">
+                <textarea 
+                    class="form-control form-control-sm" 
+                    placeholder="photo description"
+                    formControlName="description"></textarea>
+                <app-vmessage text="Maximun size allowed is 300" *ngIf="formGroup.get('description')?.hasError('maxlength')"></app-vmessage>
+            </div>
+  
+            <div class="form-group">
+                <label class="text-muted">
+                    Allow comments
+                    <input type="checkbox" formControlName="allowComments">
+                </label>
+            </div>
+  
+            <button type="submit" class="btn btn-primary btn-block"
+                    [disabled]="formGroup.invalid">
+                Upload
+            </button>
+  
+            <a class="btn btn-secondary btn-block">Cancel</a>
+        </div>
+    </form>
+</div>
