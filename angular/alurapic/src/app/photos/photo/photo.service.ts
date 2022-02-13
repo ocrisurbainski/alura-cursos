@@ -32,15 +32,15 @@ export class PhotoService {
         return this.http.post(`${environment.apiUrl}photos/upload`, JSON.stringify(dados), {headers});
     }
 
-    findById(id: number): Observable<Photo> {
-        return this.http.get<Photo>(`${environment.apiUrl}photos/${id}`);
+    findById(photoId: number): Observable<Photo> {
+        return this.http.get<Photo>(`${environment.apiUrl}photos/${photoId}`);
     }
 
-    getCommentsByIdPhoto(id: number): Observable<PhotoComment[]> {
-        return this.http.get<PhotoComment[]>(`${environment.apiUrl}photos/${id}/comments`);
+    getCommentsByIdPhoto(photoId: number): Observable<PhotoComment[]> {
+        return this.http.get<PhotoComment[]>(`${environment.apiUrl}photos/${photoId}/comments`);
     }
 
-    addComment(id: number, comment: string): Observable<void> {
+    addComment(photoId: number, comment: string): Observable<void> {
         const headers = new HttpHeaders({ "Content-Type": "application/json"});
         const dados = { 
             text: comment, 
@@ -48,7 +48,11 @@ export class PhotoService {
             userName: this.userService.getUserName(),
             date: new Date()
         };
-        return this.http.post<void>(`${environment.apiUrl}photos/${id}/comments`, JSON.stringify(dados), {headers});
+        return this.http.post<void>(`${environment.apiUrl}photos/${photoId}/comments`, JSON.stringify(dados), {headers});
+    }
+
+    removePhoto(photoId: number): Observable<void> {
+        return this.http.delete<void>(`${environment.apiUrl}photos/${photoId}`);
     }
 
 }
