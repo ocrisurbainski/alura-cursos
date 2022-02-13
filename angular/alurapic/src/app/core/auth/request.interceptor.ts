@@ -15,7 +15,6 @@ export class RequestInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-        debugger
         if (this.tokenService.hasToken()) {
 
             const token = this.tokenService.getToken()!;

@@ -29,7 +29,9 @@ export class PhotoFormComponent implements OnInit {
 
     upload(): void {
         const dados = this.formGroup.getRawValue();
-        this.photoService.upload(dados.description, dados.allowComments, this.preview).subscribe(() => this.router.navigate(['']));
+        this.photoService.upload(dados.description, dados.allowComments, this.preview).subscribe({
+            next: (value) => this.router.navigate(['']), 
+        });
     }
 
     onChangeFile(event: any): void {
@@ -43,7 +45,7 @@ export class PhotoFormComponent implements OnInit {
         fileReader.readAsBinaryString(file);
         fileReader.onload = function(event) {
             const base64 = btoa(event.target?.result as string);
-            me.preview = base64;
+            me.preview = `data:image/png;base64,${base64}`;
         };
         fileReader.onerror = function(err) {
             console.log(err);

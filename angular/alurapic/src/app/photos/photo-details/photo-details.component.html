@@ -1,0 +1,11 @@
+<div class="bg-white border" *ngIf="(photo$ | async) as photo">
+    <div class="row">
+        <div class="offset-lg-1 col-lg-7">
+            <app-photo [url]="photo.url" [description]="photo.description"></app-photo>
+        </div>
+
+        <div class="col-lg-3">
+            <app-photo-comments [photoId]="photoId"></app-photo-comments>
+        </div>
+    </div>
+</div>

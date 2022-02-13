@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PhotoFormComponent } from './photo-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { VMessageComponent } from 'src/app/shared/components/vmessage/vmessage.component';
 import { RouterModule } from '@angular/router';
 import { PhotoModule } from '../photo/photo.module';
 import { ImmediateClickModule } from 'src/app/shared/directives/immediate-click/immediate-click.module';
+import { VmessageModule } from 'src/app/shared/components/vmessage/vmessage.module';
 
 @NgModule({
 	declarations: [
@@ -14,7 +14,7 @@ import { ImmediateClickModule } from 'src/app/shared/directives/immediate-click/
 	imports: [
 		CommonModule,
 		ReactiveFormsModule,
-		VMessageComponent,
+		VmessageModule,
 		RouterModule,
 		PhotoModule,
 		ImmediateClickModule
