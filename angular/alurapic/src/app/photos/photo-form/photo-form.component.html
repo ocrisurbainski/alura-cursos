@@ -36,12 +36,20 @@
                 </label>
             </div>
   
-            <button type="submit" class="btn btn-primary btn-block"
-                    [disabled]="formGroup.invalid">
-                Upload
-            </button>
-  
-            <a class="btn btn-secondary btn-block">Cancel</a>
+            <div *ngIf="!percentUploadDone; else uploadTemplate">
+                <button type="submit" class="btn btn-primary btn-block"
+                        [disabled]="formGroup.invalid">
+                    Upload
+                </button>
+      
+                <a [routerLink]="['']" class="btn btn-secondary btn-block">Cancel</a>
+            </div>
+
+            <ng-template #uploadTemplate>
+                <div class="text-center display-4">
+                    Uploading {{percentUploadDone}}
+                </div>
+            </ng-template>
         </div>
     </form>
 </div>

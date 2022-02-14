@@ -29,7 +29,11 @@ export class PhotoService {
             description,
             allowComments,
         };
-        return this.http.post(`${environment.apiUrl}photos/upload`, JSON.stringify(dados), {headers});
+        return this.http.post(`${environment.apiUrl}photos/upload`, JSON.stringify(dados), {
+            headers, 
+            observe: 'events', 
+            reportProgress: true
+        });
     }
 
     findById(photoId: number): Observable<Photo> {
