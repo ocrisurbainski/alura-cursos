@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { UserService } from 'src/app/core/user/user.service';
 import { environment } from './../../../environments/environment';
 import { Photo } from './photo';
@@ -53,6 +53,18 @@ export class PhotoService {
 
     removePhoto(photoId: number): Observable<void> {
         return this.http.delete<void>(`${environment.apiUrl}photos/${photoId}`);
+    }
+
+    like(photoId: number): Observable<boolean> {
+        const headers = new HttpHeaders({ "Content-Type": "application/json"});
+        const dados = {
+            userId: this.userService.getUserId()
+        };
+        return this.http.post(`${environment.apiUrl}photos/${photoId}/like`, JSON.stringify(dados), {headers, observe: 'response'})
+            .pipe(map(res => true))
+            .pipe(catchError(error => {
+                return error.status === '304' ? of(false) : throwError(() => error);
+            }));
     }
 
 }
