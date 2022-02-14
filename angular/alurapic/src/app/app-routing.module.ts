@@ -12,35 +12,47 @@ const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'home'
+        redirectTo: 'home',
     },
     {
         path: 'home',
-        loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
+        loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
     },
     {
         path: 'user/:username', 
         component: PhotoListComponent, 
         resolve: {
             photos: PhotoListResolver
-        }
+        },
+        data: {
+            title: 'Timeline',
+        },
     },
     {
         path: 'p/add', 
         component: PhotoFormComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
+        data: {
+            title: 'Photo Upload',
+        },
     },
     {
         path: 'p/:photoId', 
         component: PhotoDetailsComponent,
+        data: {
+            title: 'Photo details',
+        },
     },
     {
         path: 'not-found',
-        component: NotFoundComponent
+        component: NotFoundComponent,
+        data: {
+            title: 'Not found',
+        },
     },
     {
         path: '**', 
-        redirectTo: 'not-found'
+        redirectTo: 'not-found',
     }
 ];
 
