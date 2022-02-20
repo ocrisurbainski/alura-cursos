@@ -1,3 +1,4 @@
+import { escapeHtml } from "../decorators/escape-html.js";
 import { Negociacoes } from "../models/negociacoes.js";
 import { AbstractView } from "./abstract-view.js";
 
@@ -5,6 +6,7 @@ export class NegociacoesView extends AbstractView<Negociacoes> {
 
     private _formatter =  new Intl.DateTimeFormat();
 
+    @escapeHtml()
     protected template(negociacoes: Negociacoes): string {
         return `
             <table class="table table-hover table-bordered">

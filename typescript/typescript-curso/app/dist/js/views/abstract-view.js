@@ -7,8 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { inspect } from "../decorators/inspect.js";
 import { metricaTempoExcecucao } from "../decorators/metrica-tempo-execucao.js";
 export class AbstractView {
-    constructor(selector, escapeHtml = false) {
-        this.escapeHtml = escapeHtml;
+    constructor(selector) {
         const element = document.querySelector(selector);
         if (element) {
             this._element = element;
@@ -19,9 +18,6 @@ export class AbstractView {
     }
     update(value) {
         let template = this.template(value);
-        if (this.escapeHtml) {
-            template = template.replace(/<script>[\s\S]*?<\/script>/, '');
-        }
         this._element.innerHTML = template;
     }
 }

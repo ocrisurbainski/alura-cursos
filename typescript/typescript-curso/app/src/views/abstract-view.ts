@@ -5,7 +5,7 @@ export abstract class AbstractView<T> {
 
     protected _element: HTMLElement;
 
-    constructor(selector: string, private escapeHtml: boolean = false) {
+    constructor(selector: string) {
         const element = document.querySelector(selector);
         if (element) {
             this._element = element as HTMLElement;
@@ -18,9 +18,6 @@ export abstract class AbstractView<T> {
     @inspect()
     public update(value: T): void {
         let template = this.template(value);
-        if (this.escapeHtml) {
-            template = template.replace(/<script>[\s\S]*?<\/script>/, '');
-        }
         this._element.innerHTML = template;
     }
 
