@@ -1,3 +1,5 @@
+import { metricaTempoExcecucao } from "../decorators/metrica-tempo-execucao.js";
+
 export abstract class AbstractView<T> {
 
     protected _element: HTMLElement;
@@ -11,6 +13,7 @@ export abstract class AbstractView<T> {
         }
     }
 
+    @metricaTempoExcecucao()
     public update(value: T): void {
         let template = this.template(value);
         if (this.escapeHtml) {

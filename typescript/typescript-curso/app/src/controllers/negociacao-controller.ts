@@ -1,3 +1,4 @@
+import { metricaTempoExcecucao } from "../decorators/metrica-tempo-execucao.js";
 import { DiasDaSemana } from "../enums/dias-da-semana.js";
 import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from "../models/negociacoes.js";
@@ -22,6 +23,7 @@ export class NegociacaoController {
         this._negociacoesView.update(this._negociacoes);
     }
 
+    @metricaTempoExcecucao()
     public adicionar(): void {
         const negociacao = Negociacao.of(
             this._inputData.value, 
