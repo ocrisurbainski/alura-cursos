@@ -1,3 +1,4 @@
+import { inspect } from "../decorators/inspect.js";
 import { metricaTempoExcecucao } from "../decorators/metrica-tempo-execucao.js";
 
 export abstract class AbstractView<T> {
@@ -14,6 +15,7 @@ export abstract class AbstractView<T> {
     }
 
     @metricaTempoExcecucao()
+    @inspect()
     public update(value: T): void {
         let template = this.template(value);
         if (this.escapeHtml) {
