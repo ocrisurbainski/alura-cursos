@@ -9,6 +9,7 @@ import { metricaTempoExcecucao } from "../decorators/metrica-tempo-execucao.js";
 import { DiasDaSemana } from "../enums/dias-da-semana.js";
 import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from "../models/negociacoes.js";
+import { NegociacoesService } from "../services/negociacoes-service.js";
 import { MensagemView } from "../views/mensagem-view.js";
 import { NegociacoesView } from "../views/nogociacoes-view.js";
 export class NegociacaoController {
@@ -16,6 +17,7 @@ export class NegociacaoController {
         this._negociacoesView = new NegociacoesView('#negociacoesView');
         this._mensagemView = new MensagemView('#mensagemView');
         this._negociacoes = new Negociacoes();
+        this._negociacoesService = new NegociacoesService();
         this._negociacoesView.update(this._negociacoes);
     }
     adicionar() {
@@ -26,6 +28,14 @@ export class NegociacaoController {
             this.updateView();
             this.limparFormulario();
         }
+    }
+    importarDados() {
+        this._negociacoesService.obterNegociacoes().then((negociacoes) => {
+            for (let negociacao of negociacoes) {
+                this._negociacoes.add(negociacao);
+            }
+            this._negociacoesView.update(this._negociacoes);
+        });
     }
     validarNegociacao(negociacao) {
         let result = true;

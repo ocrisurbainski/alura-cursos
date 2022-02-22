@@ -15,4 +15,7 @@ export class Negociacao {
         const data = new Date(dataString.replace(/-/g, ','));
         return new Negociacao(data, quantidade, valor);
     }
+    static ofNegociacaoTO(negociacaoTO) {
+        return new Negociacao(new Date(), negociacaoTO.vezes, negociacaoTO.montante);
+    }
 }

@@ -1,3 +1,5 @@
+import { NegociacaoTO } from "./negociacao-to.js";
+
 export class Negociacao {
 
     constructor(
@@ -17,5 +19,9 @@ export class Negociacao {
     public static of(dataString: string, quantidade: number, valor: number): Negociacao {
         const data = new Date(dataString.replace(/-/g, ','));
         return new Negociacao(data, quantidade, valor);
+    }
+
+    public static ofNegociacaoTO(negociacaoTO: NegociacaoTO): Negociacao {
+        return new Negociacao(new Date(), negociacaoTO.vezes, negociacaoTO.montante);
     }
 }

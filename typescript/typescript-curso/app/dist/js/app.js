@@ -10,3 +10,10 @@ if (form) {
 else {
     throw new Error('Não foi possível inicializar a aplicação, verifique se o form possui a classe \'.form\'.');
 }
+const btnImportar = document.querySelector("#btnImportar");
+if (btnImportar) {
+    btnImportar.addEventListener('click', () => controller.importarDados());
+}
+else {
+    throw new Error('Botão \'.btnImportar\' não foi encontrado.');
+}

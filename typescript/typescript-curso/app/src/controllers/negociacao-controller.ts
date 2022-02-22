@@ -3,6 +3,7 @@ import { metricaTempoExcecucao } from "../decorators/metrica-tempo-execucao.js";
 import { DiasDaSemana } from "../enums/dias-da-semana.js";
 import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from "../models/negociacoes.js";
+import { NegociacoesService } from "../services/negociacoes-service.js";
 import { MensagemView } from "../views/mensagem-view.js";
 import { NegociacoesView } from "../views/nogociacoes-view.js";
 
@@ -21,6 +22,8 @@ export class NegociacaoController {
     private _mensagemView = new MensagemView('#mensagemView');
 
     private _negociacoes: Negociacoes = new Negociacoes();
+
+    private _negociacoesService = new NegociacoesService();
 
     constructor() {
         this._negociacoesView.update(this._negociacoes);
@@ -44,6 +47,16 @@ export class NegociacaoController {
     
             this.limparFormulario();
         }
+    }
+
+    public importarDados(): void {
+        this._negociacoesService.obterNegociacoes().then((negociacoes: Negociacao[]) => {
+            for (let negociacao of negociacoes) {
+                this._negociacoes.add(negociacao);
+            }
+
+            this._negociacoesView.update(this._negociacoes);
+        });
     }
 
     private validarNegociacao(negociacao: Negociacao): boolean {
