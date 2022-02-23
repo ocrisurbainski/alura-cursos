@@ -1,7 +1,8 @@
 import { NegociacaoTO } from "./negociacao-to.js";
 import { TextConverter } from "../models/text-converter.js";
+import { Comparable } from "./comparable.js";
 
-export class Negociacao implements TextConverter{
+export class Negociacao implements TextConverter, Comparable<Negociacao> {
 
     constructor(
         private _data: Date, 

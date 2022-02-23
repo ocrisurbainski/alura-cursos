@@ -11,4 +11,7 @@ export class Negociacoes {
     toText() {
         return JSON.stringify(this, null, 4);
     }
+    ehIgual(value) {
+        return JSON.stringify(this.lista) === JSON.stringify(value.lista);
+    }
 }
