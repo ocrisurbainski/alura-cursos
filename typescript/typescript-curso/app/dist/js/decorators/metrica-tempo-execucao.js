@@ -18,3 +18,4 @@ function calcular(t1, t2, showMetricasEmSegundos) {
     }
     return `${diff} millisegundos`;
 }
+//# sourceMappingURL=metrica-tempo-execucao.js.map

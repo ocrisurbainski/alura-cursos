@@ -42,3 +42,4 @@ export class NegociacoesView extends AbstractView {
 __decorate([
     escapeHtml()
 ], NegociacoesView.prototype, "template", null);
+//# sourceMappingURL=nogociacoes-view.js.map

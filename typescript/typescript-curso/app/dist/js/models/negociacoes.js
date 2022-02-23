@@ -15,3 +15,4 @@ export class Negociacoes {
         return JSON.stringify(this.lista) === JSON.stringify(value.lista);
     }
 }
+//# sourceMappingURL=negociacoes.js.map

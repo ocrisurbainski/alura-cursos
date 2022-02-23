@@ -25,3 +25,4 @@ __decorate([
     metricaTempoExcecucao(),
     inspect()
 ], AbstractView.prototype, "update", null);
+//# sourceMappingURL=abstract-view.js.map

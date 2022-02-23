@@ -6,3 +6,4 @@ export class MensagemView extends AbstractView {
         `;
     }
 }
+//# sourceMappingURL=mensagem-view.js.map

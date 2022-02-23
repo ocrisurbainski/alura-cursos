@@ -84,3 +84,4 @@ __decorate([
 __decorate([
     metricaTempoExcecucao()
 ], NegociacaoController.prototype, "adicionar", null);
+//# sourceMappingURL=negociacao-controller.js.map

@@ -36,3 +36,4 @@ export class Negociacao {
         return new Negociacao(new Date(), negociacaoTO.vezes, negociacaoTO.montante);
     }
 }
+//# sourceMappingURL=negociacao.js.map

@@ -12,3 +12,4 @@ export function escapeHtml() {
         return descriptor;
     };
 }
+//# sourceMappingURL=escape-html.js.map
