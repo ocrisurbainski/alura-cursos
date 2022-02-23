@@ -1,5 +1,5 @@
 import { NegociacaoTO } from "./negociacao-to.js";
-import { TextConverter } from "./text-converter.js";
+import { TextConverter } from "../models/text-converter.js";
 
 export class Negociacao implements TextConverter{
 
@@ -23,6 +23,20 @@ export class Negociacao implements TextConverter{
             Quantidade: ${this.quantidade},
             Valor: ${this.valor}
         `;
+    }
+
+    public ehIgual(negociacao: Negociacao): boolean {
+        if (negociacao === undefined || negociacao === null) {
+            return false;
+        }
+        return this.isSameDate(negociacao._data);
+    }
+
+    private isSameDate(value: Date): boolean {
+        const isSameDate = this._data.getDate() === value.getDate(),
+            isSameMonth = this._data.getMonth() === value.getMonth(),
+            isSameYear = this._data.getFullYear() === value.getFullYear();
+        return isSameDate && isSameMonth && isSameYear;
     }
 
     public static of(dataString: string, quantidade: number, valor: number): Negociacao {

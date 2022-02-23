@@ -1,7 +1,7 @@
 import { domInject } from "../decorators/dom-inject.js";
 import { metricaTempoExcecucao } from "../decorators/metrica-tempo-execucao.js";
 import { DiasDaSemana } from "../enums/dias-da-semana.js";
-import { Negociacao } from "../models/negociacao.js";
+import { Negociacao } from "../interfaces/negociacao.js";
 import { Negociacoes } from "../models/negociacoes.js";
 import { NegociacoesService } from "../services/negociacoes-service.js";
 import { imprimir } from "../util/imprimir.js";
@@ -53,13 +53,20 @@ export class NegociacaoController {
     }
 
     public importarDados(): void {
-        this._negociacoesService.obterNegociacoes().then((negociacoes: Negociacao[]) => {
-            for (let negociacao of negociacoes) {
-                this._negociacoes.add(negociacao);
-            }
+        this._negociacoesService
+            .obterNegociacoes()
+            .then((negociacoes: Negociacao[]) => {
+                return negociacoes.filter(negociacao => {
+                    return !this._negociacoes.lista.some(item => item.ehIgual(negociacao));
+                });
+            })
+            .then((negociacoes: Negociacao[]) => {
+                for (let negociacao of negociacoes) {
+                    this._negociacoes.add(negociacao);
+                }
 
-            this._negociacoesView.update(this._negociacoes);
-        });
+                this._negociacoesView.update(this._negociacoes);
+            });
     }
 
     private validarNegociacao(negociacao: Negociacao): boolean {

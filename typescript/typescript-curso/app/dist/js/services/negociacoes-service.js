@@ -1,4 +1,4 @@
-import { Negociacao } from "../models/negociacao.js";
+import { Negociacao } from "../interfaces/negociacao.js";
 export class NegociacoesService {
     obterNegociacoes() {
         return fetch('http://localhost:8080/dados')

@@ -1,5 +1,5 @@
-import { Negociacao } from "../models/negociacao.js";
-import { NegociacaoTO } from "../models/negociacao-to.js";
+import { Negociacao } from "../interfaces/negociacao.js";
+import { NegociacaoTO } from "../interfaces/negociacao-to.js";
 
 export class NegociacoesService {
 

@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { domInject } from "../decorators/dom-inject.js";
 import { metricaTempoExcecucao } from "../decorators/metrica-tempo-execucao.js";
 import { DiasDaSemana } from "../enums/dias-da-semana.js";
-import { Negociacao } from "../models/negociacao.js";
+import { Negociacao } from "../interfaces/negociacao.js";
 import { Negociacoes } from "../models/negociacoes.js";
 import { NegociacoesService } from "../services/negociacoes-service.js";
 import { imprimir } from "../util/imprimir.js";
@@ -32,7 +32,14 @@ export class NegociacaoController {
         }
     }
     importarDados() {
-        this._negociacoesService.obterNegociacoes().then((negociacoes) => {
+        this._negociacoesService
+            .obterNegociacoes()
+            .then((negociacoes) => {
+            return negociacoes.filter(negociacao => {
+                return !this._negociacoes.lista.some(item => item.ehIgual(negociacao));
+            });
+        })
+            .then((negociacoes) => {
             for (let negociacao of negociacoes) {
                 this._negociacoes.add(negociacao);
             }

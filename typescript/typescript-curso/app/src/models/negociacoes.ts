@@ -1,4 +1,4 @@
-import { Negociacao } from "./negociacao.js";
+import { Negociacao } from "../interfaces/negociacao.js";
 import { TextConverter } from "./text-converter.js";
 
 export class Negociacoes implements TextConverter {
