@@ -1,6 +1,7 @@
 import { Negociacao } from "./negociacao.js";
+import { TextConverter } from "./text-converter.js";
 
-export class Negociacoes {
+export class Negociacoes implements TextConverter {
 
     private _negociacoes: Array<Negociacao> = new Array();
 
@@ -12,5 +13,9 @@ export class Negociacoes {
 
     public get lista(): ReadonlyArray<Negociacao> {
         return [...this._negociacoes];
+    }
+
+    toText(): string {
+        return JSON.stringify(this, null, 4);
     }
 }

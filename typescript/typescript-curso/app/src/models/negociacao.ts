@@ -1,6 +1,7 @@
 import { NegociacaoTO } from "./negociacao-to.js";
+import { TextConverter } from "./text-converter.js";
 
-export class Negociacao {
+export class Negociacao implements TextConverter{
 
     constructor(
         private _data: Date, 
@@ -14,6 +15,14 @@ export class Negociacao {
     get data(): Date {
         const novaData = new Date(this._data.getTime());
         return novaData;
+    }
+
+    toText(): string {
+        return `
+            Data: ${this.data},
+            Quantidade: ${this.quantidade},
+            Valor: ${this.valor}
+        `;
     }
 
     public static of(dataString: string, quantidade: number, valor: number): Negociacao {

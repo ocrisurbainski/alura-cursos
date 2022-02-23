@@ -8,4 +8,7 @@ export class Negociacoes {
     get lista() {
         return [...this._negociacoes];
     }
+    toText() {
+        return JSON.stringify(this, null, 4);
+    }
 }

@@ -11,6 +11,13 @@ export class Negociacao {
         const novaData = new Date(this._data.getTime());
         return novaData;
     }
+    toText() {
+        return `
+            Data: ${this.data},
+            Quantidade: ${this.quantidade},
+            Valor: ${this.valor}
+        `;
+    }
     static of(dataString, quantidade, valor) {
         const data = new Date(dataString.replace(/-/g, ','));
         return new Negociacao(data, quantidade, valor);
