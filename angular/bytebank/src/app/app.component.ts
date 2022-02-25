@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'bytebank';
+
+  public onTransfeir(event): void {
+    console.log(event);
+  }
 }
