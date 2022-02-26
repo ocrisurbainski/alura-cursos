@@ -6,9 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'bytebank';
+
+  public transferencias: any[] = [];
+
+  public title = 'bytebank';
 
   public onTransfeir(event): void {
-    console.log(event);
+    const transferencia = {
+      ...event,
+      data: new Date()
+    };
+    this.transferencias.push(transferencia);
   }
 }
