@@ -1,13 +1,19 @@
-import { Component, Input } from '@angular/core';
+import { TransferenciaService } from './../services/transferencia.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-extrato',
   templateUrl: './extrato.component.html',
   styleUrls: ['./extrato.component.scss']
 })
-export class ExtratoComponent {
+export class ExtratoComponent implements OnInit {
 
-  @Input() public transferencias: any[];
+  public transferencias: any[];
 
-  constructor() { }
+  constructor(private transferencicService: TransferenciaService) { }
+
+  ngOnInit(): void {
+      this.transferencias = this.transferencicService.transferencias;
+  }
+
 }
