@@ -1,22 +1,26 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Transferencia } from '../models/transferencia.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransferenciaService {
 
-  private _transferencias: any[];
+  private url: string;
 
-  constructor() {
-    this._transferencias = [];
+  constructor(private httpClient: HttpClient) {
+    this.url = `${environment.apiUrl}/transferencias`;
   }
 
-  get transferencias(): any[] {
-    return this._transferencias;
+  public findAll(): Observable<Transferencia[]> {
+    return this.httpClient.get<Transferencia[]>(this.url);
   }
 
-  public adicionar(transferencia: any): void {
+  public adicionar(transferencia: Transferencia): Observable<Transferencia> {
     transferencia.data = new Date();
-    this._transferencias.push(transferencia);
+    return this.httpClient.post<Transferencia>(this.url, transferencia);
   }
 }
