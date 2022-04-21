@@ -1,3 +1,4 @@
+import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -15,12 +16,13 @@ registerLocaleData(localePt, 'pt');
   declarations: [
     AppComponent,
     NovaTransferenciaComponent,
-    ExtratoComponent
+    ExtratoComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    AppRoutingModule,
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'pt'},
