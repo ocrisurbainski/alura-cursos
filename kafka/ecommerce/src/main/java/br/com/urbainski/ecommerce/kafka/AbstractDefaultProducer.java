@@ -17,9 +17,9 @@ public abstract class AbstractDefaultProducer<A> implements AutoCloseable {
         this.producer = new KafkaProducer<A, A>(KafkaProperties.getKafkaProducerProperties());
     }
 
-    public void send(A message) {
+    public void send(A key, A message) {
         try {
-            var record = new ProducerRecord<>(getTopic().name(), message, message);
+            var record = new ProducerRecord<>(getTopic().name(), key, message);
             producer.send(record, getDefaultCallback()).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
