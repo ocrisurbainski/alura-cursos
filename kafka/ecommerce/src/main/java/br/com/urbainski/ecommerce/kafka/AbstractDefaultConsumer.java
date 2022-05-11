@@ -43,7 +43,7 @@ public abstract class AbstractDefaultConsumer<A> {
 
         while (true) {
 
-            var records = consumer.poll(Duration.ofMillis(1000));
+            var records = consumer.poll(Duration.ofMillis(100));
 
             processarMensagens(records);
 
