@@ -1,30 +1,21 @@
 package br.com.urbainski.ecommerce.order;
 
-import br.com.urbainski.ecommerce.kafka.AbstractDefaultProducer;
-import br.com.urbainski.ecommerce.kafka.Topics;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import br.com.urbainski.ecommerce.email.EmailProducerService;
 
-public class NewOrderMain extends AbstractDefaultProducer<String> {
-
-    private static final Logger log = LoggerFactory.getLogger(NewOrderMain.class);
+public class NewOrderMain {
 
     public static void main(String[] args) {
 
         var value = "1,1,1250.00";
 
-        var newOrder = new NewOrderMain();
-        newOrder.send(value);
+        try (var newOrderService = new NewOrderService()) {
+            newOrderService.send(value);
+        }
+
+        try (var emailService = new EmailProducerService()) {
+            emailService.send("Sua venda está sendo processada, aguarde...");
+        }
     }
 
-    @Override
-    public Topics getTopic() {
-        return Topics.ECOMMERCE_NEW_ORDER;
-    }
-
-    @Override
-    public Logger getLog() {
-        return log;
-    }
 
 }

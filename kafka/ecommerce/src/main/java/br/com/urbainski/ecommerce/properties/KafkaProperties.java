@@ -13,7 +13,7 @@ public final class KafkaProperties {
 
     private KafkaProperties() {}
 
-    public static Properties getProducerKafkaProperties() {
+    public static Properties getKafkaProducerProperties() {
         var properties = new Properties();
         properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVER);
         properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -21,7 +21,7 @@ public final class KafkaProperties {
         return properties;
     }
 
-    public static Properties getConsumerKafkaProperties(String groudId) {
+    public static Properties getKafkaConsumerProperties(String groudId) {
         var properties = new Properties();
         properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVER);
         properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());

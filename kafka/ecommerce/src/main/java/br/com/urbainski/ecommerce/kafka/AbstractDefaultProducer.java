@@ -8,13 +8,18 @@ import org.slf4j.Logger;
 
 import java.util.concurrent.ExecutionException;
 
-public abstract class AbstractDefaultProducer<A> {
+public abstract class AbstractDefaultProducer<A> implements AutoCloseable {
+
+    private final KafkaProducer<A, A> producer;
+
+    public AbstractDefaultProducer() {
+
+        this.producer = new KafkaProducer<A, A>(KafkaProperties.getKafkaProducerProperties());
+    }
 
     public void send(A message) {
-        try (var producer = new KafkaProducer<A, A>(KafkaProperties.getProducerKafkaProperties())) {
-
+        try {
             var record = new ProducerRecord<>(getTopic().name(), message, message);
-
             producer.send(record, getDefaultCallback()).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -42,5 +47,10 @@ public abstract class AbstractDefaultProducer<A> {
     public abstract Topics getTopic();
 
     public abstract Logger getLog();
+
+    @Override
+    public void close() {
+        this.producer.close();
+    }
 
 }

@@ -1,4 +1,4 @@
-package br.com.urbainski.ecommerce.fraude;
+package br.com.urbainski.ecommerce.email;
 
 import br.com.urbainski.ecommerce.kafka.AbstractDefaultConsumer;
 import br.com.urbainski.ecommerce.kafka.Topics;
@@ -7,18 +7,22 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class FraudeDetectorService extends AbstractDefaultConsumer<String> {
+public class EmailConsumerService extends AbstractDefaultConsumer<String> {
 
-    private static final Logger log = LoggerFactory.getLogger(FraudeDetectorService.class);
+    private static final Logger log = LoggerFactory.getLogger(EmailConsumerService.class);
+
+    public EmailConsumerService() {
+        super(1000);
+    }
 
     @Override
     public String getGroupId() {
-        return FraudeDetectorService.class.getSimpleName();
+        return EmailConsumerService.class.getSimpleName();
     }
 
     @Override
     public List<Topics> getTopics() {
-        return List.of(Topics.ECOMMERCE_NEW_ORDER);
+        return List.of(Topics.ECOMMERCE_SEND_EMAIL);
     }
 
     @Override
@@ -27,7 +31,7 @@ public class FraudeDetectorService extends AbstractDefaultConsumer<String> {
     }
 
     public static void main(String[] args) {
-        var consumer = new FraudeDetectorService();
+        var consumer = new EmailConsumerService();
         consumer.consume();
     }
 

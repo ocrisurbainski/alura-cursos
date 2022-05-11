@@ -27,7 +27,7 @@ public abstract class AbstractDefaultConsumer<A> {
 
     public void consume() {
 
-        try (var consumer = new KafkaConsumer<A, A>(KafkaProperties.getConsumerKafkaProperties(getGroupId()))) {
+        try (var consumer = new KafkaConsumer<A, A>(KafkaProperties.getKafkaConsumerProperties(getGroupId()))) {
 
             consumer.subscribe(getTopics().stream().map(Topics::name).collect(Collectors.toList()));
 
@@ -63,7 +63,8 @@ public abstract class AbstractDefaultConsumer<A> {
 
         for (var record : records) {
             getLog().info("----------------------------------------------------");
-            getLog().info("Processando nova order, chegachem de fraude");
+            getLog().info("Processando nova mensagem");
+            getLog().info(getClass().getName());
             getLog().info(record.key().toString());
             getLog().info(record.value().toString());
             getLog().info(String.valueOf(record.partition()));
@@ -75,7 +76,7 @@ public abstract class AbstractDefaultConsumer<A> {
                 throw new RuntimeException(e);
             }
 
-            getLog().info("Nova order processada");
+            getLog().info("Mensagem processada");
         }
     }
 
