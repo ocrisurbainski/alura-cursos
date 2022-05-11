@@ -29,10 +29,14 @@ public abstract class AbstractDefaultConsumer<A> {
 
         try (var consumer = new KafkaConsumer<A, A>(KafkaProperties.getKafkaConsumerProperties(getGroupId()))) {
 
-            consumer.subscribe(getTopics().stream().map(Topics::name).collect(Collectors.toList()));
+            subscribe(consumer);
 
             consumirMensagens(consumer);
         }
+    }
+
+    protected void subscribe(KafkaConsumer<A, A> consumer) {
+        consumer.subscribe(getTopics().stream().map(Topics::getTopicName).collect(Collectors.toList()));
     }
 
     private void consumirMensagens(KafkaConsumer<A, A> consumer) {
@@ -65,6 +69,7 @@ public abstract class AbstractDefaultConsumer<A> {
             getLog().info("----------------------------------------------------");
             getLog().info("Processando nova mensagem");
             getLog().info(getClass().getName());
+            getLog().info(String.format("Topic=%s", record.topic()));
             getLog().info(record.key().toString());
             getLog().info(record.value().toString());
             getLog().info(String.valueOf(record.partition()));
