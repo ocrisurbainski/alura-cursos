@@ -4,9 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.urbainski</groupId>
 	<artifactId>ecommerce</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
 
-	<properties>
+    <properties>
 		<java.version>11</java.version>
 		<kafka-clients.version>3.2.0</kafka-clients.version>
 		<slf4j-simple.version>1.7.36</slf4j-simple.version>
@@ -14,31 +15,44 @@
 		<commons-lang3.version>3.12.0</commons-lang3.version>
 	</properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.apache.kafka</groupId>
-			<artifactId>kafka-clients</artifactId>
-			<version>${kafka-clients.version}</version>
-		</dependency>
+	<modules>
+		<module>commons</module>
+		<module>service-email-consumer</module>
+		<module>service-email-producer</module>
+		<module>service-fraude-consumer</module>
+		<module>service-log-consumer</module>
+		<module>service-new-order-producer</module>
+		<module>process</module>
+	</modules>
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>${slf4j-simple.version}</version>
-		</dependency>
+	<dependencyManagement>
+		<dependencies>
 
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>${gson.version}</version>
-		</dependency>
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka-clients</artifactId>
+				<version>${kafka-clients.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3.version}</version>
-		</dependency>
-	</dependencies>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>${slf4j-simple.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>${gson.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons-lang3.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
