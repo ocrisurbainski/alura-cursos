@@ -2,12 +2,13 @@ package br.com.urbainski.ecommerce.fraude;
 
 import br.com.urbainski.ecommerce.kafka.AbstractDefaultConsumer;
 import br.com.urbainski.ecommerce.kafka.Topics;
+import br.com.urbainski.ecommerce.order.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class FraudeDetectorService extends AbstractDefaultConsumer<String> {
+public class FraudeDetectorService extends AbstractDefaultConsumer<String, Order> {
 
     private static final Logger log = LoggerFactory.getLogger(FraudeDetectorService.class);
 

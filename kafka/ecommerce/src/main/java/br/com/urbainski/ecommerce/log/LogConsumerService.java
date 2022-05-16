@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class LogConsumerService extends AbstractDefaultPatternConsumer<String> {
+public class LogConsumerService extends AbstractDefaultPatternConsumer<String, String> {
 
     private static final Logger log = LoggerFactory.getLogger(LogConsumerService.class);
 

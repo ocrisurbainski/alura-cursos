@@ -4,7 +4,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 import java.util.regex.Pattern;
 
-public abstract class AbstractDefaultPatternConsumer<A> extends AbstractDefaultConsumer<A> {
+public abstract class AbstractDefaultPatternConsumer<K, V> extends AbstractDefaultConsumer<K, V> {
 
     public AbstractDefaultPatternConsumer() {
 
@@ -15,7 +15,7 @@ public abstract class AbstractDefaultPatternConsumer<A> extends AbstractDefaultC
     }
 
     @Override
-    protected void subscribe(KafkaConsumer<A, A> consumer) {
+    protected void subscribe(KafkaConsumer<K, V> consumer) {
         if (getTopics() == null || getTopics().isEmpty()) {
             throw new IllegalStateException("Deve haver pelo menos um topic no lista.");
         }

@@ -1,15 +1,16 @@
 package br.com.urbainski.ecommerce.kafka;
 
-import br.com.urbainski.ecommerce.properties.KafkaProperties;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.slf4j.Logger;
 
+import java.lang.reflect.ParameterizedType;
 import java.time.Duration;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
-public abstract class AbstractDefaultConsumer<A> {
+public abstract class AbstractDefaultConsumer<K, V> {
 
     private final int TIMEOUT_DELAY_DEFAULT = 5000;
 
@@ -27,7 +28,7 @@ public abstract class AbstractDefaultConsumer<A> {
 
     public void consume() {
 
-        try (var consumer = new KafkaConsumer<A, A>(KafkaProperties.getKafkaConsumerProperties(getGroupId()))) {
+        try (var consumer = new KafkaConsumer<K, V>(getProperties())) {
 
             subscribe(consumer);
 
@@ -35,11 +36,11 @@ public abstract class AbstractDefaultConsumer<A> {
         }
     }
 
-    protected void subscribe(KafkaConsumer<A, A> consumer) {
+    protected void subscribe(KafkaConsumer<K, V> consumer) {
         consumer.subscribe(getTopics().stream().map(Topics::getTopicName).collect(Collectors.toList()));
     }
 
-    private void consumirMensagens(KafkaConsumer<A, A> consumer) {
+    private void consumirMensagens(KafkaConsumer<K, V> consumer) {
 
         while (true) {
 
@@ -55,7 +56,7 @@ public abstract class AbstractDefaultConsumer<A> {
         }
     }
 
-    private void processarMensagens(ConsumerRecords<A, A> records) {
+    private void processarMensagens(ConsumerRecords<K, V> records) {
 
         if (records.isEmpty()) {
 
@@ -90,4 +91,18 @@ public abstract class AbstractDefaultConsumer<A> {
     public abstract List<Topics> getTopics();
 
     public abstract Logger getLog();
+
+    @SuppressWarnings("unchecked")
+    private Properties getProperties() {
+        var parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
+        var clazzKey = (Class<K>) parameterizedType.getActualTypeArguments()[0];
+        var clazzValue = (Class<V>) parameterizedType.getActualTypeArguments()[1];
+
+        return KafkaProperties.getKafkaConsumerProperties(
+                getGroupId(),
+                KafkaTypesHelper.convertToKafkaTypes(clazzKey),
+                KafkaTypesHelper.convertToKafkaTypes(clazzValue),
+                clazzValue.getName());
+    }
+
 }

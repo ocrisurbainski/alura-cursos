@@ -1,5 +1,8 @@
 package br.com.urbainski.ecommerce.order;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.math.BigDecimal;
 
 public class Order {
@@ -23,6 +26,11 @@ public class Order {
 
     public BigDecimal getValue() {
         return value;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
 
 }

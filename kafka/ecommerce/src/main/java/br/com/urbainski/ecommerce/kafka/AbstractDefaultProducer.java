@@ -1,6 +1,5 @@
 package br.com.urbainski.ecommerce.kafka;
 
-import br.com.urbainski.ecommerce.properties.KafkaProperties;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -57,13 +56,13 @@ public abstract class AbstractDefaultProducer<K, V> implements AutoCloseable {
 
     @SuppressWarnings("unchecked")
     private Properties getProperties() {
-        Class<V> clazz = (Class<V>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        var parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
+        var clazzKey = (Class<K>) parameterizedType.getActualTypeArguments()[0];
+        var clazzValue = (Class<V>) parameterizedType.getActualTypeArguments()[1];
 
-        if (String.class.isAssignableFrom(clazz)) {
-            return KafkaProperties.getSimpleKafkaProducerProperties();
-        }
-
-        return KafkaProperties.getJsonKafkaProducerProperties();
+        return KafkaProperties.getKafkaProducerProperties(
+                KafkaTypesHelper.convertToKafkaTypes(clazzKey),
+                KafkaTypesHelper.convertToKafkaTypes(clazzValue));
     }
 
 }
