@@ -6,18 +6,20 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 
+import java.lang.reflect.ParameterizedType;
+import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
-public abstract class AbstractDefaultProducer<A> implements AutoCloseable {
+public abstract class AbstractDefaultProducer<K, V> implements AutoCloseable {
 
-    private final KafkaProducer<A, A> producer;
+    private final KafkaProducer<K, V> producer;
 
     public AbstractDefaultProducer() {
 
-        this.producer = new KafkaProducer<A, A>(KafkaProperties.getKafkaProducerProperties());
+        this.producer = new KafkaProducer<K, V>(getProperties());
     }
 
-    public void send(A key, A message) {
+    public void send(K key, V message) {
         try {
             var record = new ProducerRecord<>(getTopic().name(), key, message);
             producer.send(record, getDefaultCallback()).get();
@@ -51,6 +53,17 @@ public abstract class AbstractDefaultProducer<A> implements AutoCloseable {
     @Override
     public void close() {
         this.producer.close();
+    }
+
+    @SuppressWarnings("unchecked")
+    private Properties getProperties() {
+        Class<V> clazz = (Class<V>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+
+        if (String.class.isAssignableFrom(clazz)) {
+            return KafkaProperties.getSimpleKafkaProducerProperties();
+        }
+
+        return KafkaProperties.getJsonKafkaProducerProperties();
     }
 
 }

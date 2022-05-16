@@ -1,5 +1,6 @@
 package br.com.urbainski.ecommerce.properties;
 
+import br.com.urbainski.ecommerce.serializer.GsonSerializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -13,11 +14,23 @@ public final class KafkaProperties {
 
     private KafkaProperties() {}
 
-    public static Properties getKafkaProducerProperties() {
-        var properties = new Properties();
-        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVER);
+    public static Properties getSimpleKafkaProducerProperties() {
+        var properties = getDefaultKafkaProducerProperties();
         properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        return properties;
+    }
+
+    public static Properties getJsonKafkaProducerProperties() {
+        var properties = getDefaultKafkaProducerProperties();
+        properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, GsonSerializer.class.getName());
+        properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, GsonSerializer.class.getName());
+        return properties;
+    }
+
+    private static Properties getDefaultKafkaProducerProperties() {
+        var properties = new Properties();
+        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVER);
         return properties;
     }
 

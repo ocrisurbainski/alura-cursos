@@ -70,10 +70,10 @@ public abstract class AbstractDefaultConsumer<A> {
             getLog().info("Processando nova mensagem");
             getLog().info(getClass().getName());
             getLog().info(String.format("Topic=%s", record.topic()));
-            getLog().info(record.key().toString());
-            getLog().info(record.value().toString());
-            getLog().info(String.valueOf(record.partition()));
-            getLog().info(String.valueOf(record.offset()));
+            getLog().info(String.format("Chave=%s", record.key().toString()));
+            getLog().info(String.format("Valor=%s", record.value().toString()));
+            getLog().info(String.format("Partição=%s", record.partition()));
+            getLog().info(String.format("Offset=%s", record.offset()));
 
             try {
                 Thread.sleep(timeoutDelay);

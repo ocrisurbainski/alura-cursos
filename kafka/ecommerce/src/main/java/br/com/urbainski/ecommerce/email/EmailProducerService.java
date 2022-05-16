@@ -5,7 +5,7 @@ import br.com.urbainski.ecommerce.kafka.Topics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EmailProducerService extends AbstractDefaultProducer<String> {
+public class EmailProducerService extends AbstractDefaultProducer<String, String> {
 
     private static final Logger log = LoggerFactory.getLogger(EmailProducerService.class);
     
