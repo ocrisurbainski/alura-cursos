@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class EmailConsumerService extends AbstractDefaultConsumer<String, String> {
+public class EmailConsumerService extends AbstractDefaultConsumer<String, Email> {
 
     private static final Logger log = LoggerFactory.getLogger(EmailConsumerService.class);
 
