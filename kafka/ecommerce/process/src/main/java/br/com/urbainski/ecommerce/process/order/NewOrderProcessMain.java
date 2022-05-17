@@ -19,7 +19,7 @@ public class NewOrderProcessMain {
                     var userId = UUID.randomUUID().toString();
                     var orderId = UUID.randomUUID().toString();
 
-                    var order = new Order(userId, orderId, BigDecimal.valueOf(random.nextDouble()));
+                    var order = new Order(userId, orderId, getValorAletorioOrder(random));
 
                     newOrderService.send(userId, order);
 
@@ -34,4 +34,13 @@ public class NewOrderProcessMain {
             }
         }
     }
+
+    private static BigDecimal getValorAletorioOrder(Random random) {
+
+        var primeiro = random.nextInt(10000);
+        var segundo = random.nextInt(99);
+
+        return new BigDecimal(primeiro + "." + segundo);
+    }
+
 }

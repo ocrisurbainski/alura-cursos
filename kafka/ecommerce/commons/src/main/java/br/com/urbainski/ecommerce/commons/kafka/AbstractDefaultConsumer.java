@@ -1,5 +1,6 @@
 package br.com.urbainski.ecommerce.commons.kafka;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.slf4j.Logger;
@@ -82,6 +83,8 @@ public abstract class AbstractDefaultConsumer<K, V> {
                 throw new RuntimeException(e);
             }
 
+            processarRecord(record);
+
             getLog().info("Mensagem processada");
         }
     }
@@ -91,6 +94,10 @@ public abstract class AbstractDefaultConsumer<K, V> {
     public abstract List<Topics> getTopics();
 
     public abstract Logger getLog();
+
+    public void processarRecord(ConsumerRecord<K, V> record) {
+
+    }
 
     @SuppressWarnings("unchecked")
     private Properties getProperties() {
