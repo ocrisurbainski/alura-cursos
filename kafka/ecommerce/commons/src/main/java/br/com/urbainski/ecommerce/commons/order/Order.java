@@ -8,11 +8,14 @@ import java.math.BigDecimal;
 public class Order {
     private final String userId;
     private final String orderId;
+
+    private final String email;
     private final BigDecimal value;
 
-    public Order(String userId, String orderId, BigDecimal value) {
+    public Order(String userId, String orderId, String email, BigDecimal value) {
         this.userId = userId;
         this.orderId = orderId;
+        this.email = email;
         this.value = value;
     }
 
@@ -26,6 +29,10 @@ public class Order {
 
     public BigDecimal getValue() {
         return value;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override

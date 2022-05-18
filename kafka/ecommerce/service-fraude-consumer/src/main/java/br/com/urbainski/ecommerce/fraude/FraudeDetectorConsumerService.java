@@ -14,13 +14,13 @@ import java.util.List;
 
 public class FraudeDetectorConsumerService extends AbstractDefaultConsumer<String, Order> {
 
+    private static final Logger log = LoggerFactory.getLogger(FraudeDetectorConsumerService.class);
+
     private static final BigDecimal VALUE_ORDER_TO_REFLECT_ON_FRAUD = new BigDecimal("4500");
 
     private NewOrderApprovedProducerService newOrderApprovedProducerService;
 
     private NewOrderRejectedProducerService newOrderRejectedProducerService;
-
-    private static final Logger log = LoggerFactory.getLogger(FraudeDetectorConsumerService.class);
 
     @Override
     public String getGroupId() {

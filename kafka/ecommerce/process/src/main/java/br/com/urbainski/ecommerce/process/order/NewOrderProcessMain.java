@@ -18,8 +18,9 @@ public class NewOrderProcessMain {
                 for (var i = 0; i < 10; i++) {
                     var userId = UUID.randomUUID().toString();
                     var orderId = UUID.randomUUID().toString();
+                    var emailAddress = Math.random() + "@gmail.com";
 
-                    var order = new Order(userId, orderId, getValorAletorioOrder(random));
+                    var order = new Order(userId, orderId, emailAddress, getValorAletorioOrder(random));
 
                     newOrderService.send(userId, order);
 
@@ -27,7 +28,7 @@ public class NewOrderProcessMain {
                             orderId,
                             "Nova venda",
                             String.format("A venda da order: %s está sendo processada, aguarde...", orderId),
-                            "destinatario@gmail.com");
+                            emailAddress);
 
                     emailService.send(userId, email);
                 }
