@@ -6,21 +6,15 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import java.math.BigDecimal;
 
 public class Order {
-    private final String userId;
     private final String orderId;
 
     private final String email;
     private final BigDecimal value;
 
-    public Order(String userId, String orderId, String email, BigDecimal value) {
-        this.userId = userId;
+    public Order(String orderId, String email, BigDecimal value) {
         this.orderId = orderId;
         this.email = email;
         this.value = value;
-    }
-
-    public String getUserId() {
-        return userId;
     }
 
     public String getOrderId() {

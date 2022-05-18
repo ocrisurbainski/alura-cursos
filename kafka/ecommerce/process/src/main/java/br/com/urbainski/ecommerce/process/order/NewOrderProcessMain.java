@@ -16,13 +16,12 @@ public class NewOrderProcessMain {
         try (var newOrderService = new NewOrderProducerService()) {
             try (var emailService = new EmailProducerService()) {
                 for (var i = 0; i < 10; i++) {
-                    var userId = UUID.randomUUID().toString();
                     var orderId = UUID.randomUUID().toString();
                     var emailAddress = Math.random() + "@gmail.com";
 
-                    var order = new Order(userId, orderId, emailAddress, getValorAletorioOrder(random));
+                    var order = new Order(orderId, emailAddress, getValorAletorioOrder(random));
 
-                    newOrderService.send(userId, order);
+                    newOrderService.send(emailAddress, order);
 
                     var email = new Email(
                             orderId,
@@ -30,7 +29,7 @@ public class NewOrderProcessMain {
                             String.format("A venda da order: %s está sendo processada, aguarde...", orderId),
                             emailAddress);
 
-                    emailService.send(userId, email);
+                    emailService.send(emailAddress, email);
                 }
             }
         }

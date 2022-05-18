@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.UUID;
 
 public class CreateNewUserConsumerService extends AbstractDefaultConsumer<String, Order> {
 
@@ -19,6 +20,7 @@ public class CreateNewUserConsumerService extends AbstractDefaultConsumer<String
 
     public CreateNewUserConsumerService(UsersRepository usersRepository) {
 
+        super(500);
         this.usersRepository = usersRepository;
     }
 
@@ -42,12 +44,12 @@ public class CreateNewUserConsumerService extends AbstractDefaultConsumer<String
 
         var order = record.value();
 
-        var users = new Users(order.getUserId(), order.getEmail());
-
         if (usersRepository.existsUsersByEmail(order.getEmail())) {
 
             getLog().info("Usuário já existe.");
         } else {
+
+            var users = new Users(UUID.randomUUID().toString(), order.getEmail());
 
             boolean result = usersRepository.save(users);
 

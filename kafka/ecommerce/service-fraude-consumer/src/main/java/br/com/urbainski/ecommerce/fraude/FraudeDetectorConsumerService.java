@@ -44,10 +44,10 @@ public class FraudeDetectorConsumerService extends AbstractDefaultConsumer<Strin
         var isFraud = isFraud(order);
 
         if (isFraud) {
-            getNewOrderRejectedProducerService().send(order.getUserId(), order);
+            getNewOrderRejectedProducerService().send(order.getEmail(), order);
             getLog().info("Está ordem É suspeita de ser uma fraude.");
         } else {
-            getNewOrderApprovedProducerService().send(order.getUserId(), order);
+            getNewOrderApprovedProducerService().send(order.getEmail(), order);
             getLog().info("Está ordem NÃO TEM suspeita de ser uma fraude.");
         }
     }
