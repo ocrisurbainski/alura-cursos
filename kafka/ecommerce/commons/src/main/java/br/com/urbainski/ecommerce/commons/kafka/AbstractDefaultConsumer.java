@@ -13,18 +13,7 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractDefaultConsumer<K, V> {
 
-    private final int TIMEOUT_DELAY_DEFAULT = 5000;
-
-    private final int timeoutDelay;
-
     public AbstractDefaultConsumer() {
-
-        this.timeoutDelay = TIMEOUT_DELAY_DEFAULT;
-    }
-
-    public AbstractDefaultConsumer(int timeoutDelay) {
-
-        this.timeoutDelay = timeoutDelay;
     }
 
     public void consume() {
@@ -48,16 +37,10 @@ public abstract class AbstractDefaultConsumer<K, V> {
             var records = consumer.poll(Duration.ofMillis(100));
 
             processarMensagens(records);
-
-            try {
-                Thread.sleep(timeoutDelay);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
-    private void processarMensagens(ConsumerRecords<K, V> records) {
+    protected void processarMensagens(ConsumerRecords<K, V> records) {
 
         if (records.isEmpty()) {
 
@@ -76,12 +59,6 @@ public abstract class AbstractDefaultConsumer<K, V> {
             getLog().info(String.format("Valor=%s", record.value().toString()));
             getLog().info(String.format("Partição=%s", record.partition()));
             getLog().info(String.format("Offset=%s", record.offset()));
-
-            try {
-                Thread.sleep(timeoutDelay);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
 
             processarRecord(record);
 

@@ -10,10 +10,6 @@ public abstract class AbstractDefaultPatternConsumer<K, V> extends AbstractDefau
 
     }
 
-    public AbstractDefaultPatternConsumer(int timeoutDelay) {
-        super(timeoutDelay);
-    }
-
     @Override
     protected void subscribe(KafkaConsumer<K, V> consumer) {
         if (getTopics() == null || getTopics().isEmpty()) {

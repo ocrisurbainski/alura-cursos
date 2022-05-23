@@ -6,6 +6,7 @@ import br.com.urbainski.ecommerce.commons.order.Order;
 import br.com.urbainski.ecommerce.order.NewOrderApprovedProducerService;
 import br.com.urbainski.ecommerce.order.NewOrderRejectedProducerService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +39,25 @@ public class FraudeDetectorConsumerService extends AbstractDefaultConsumer<Strin
     }
 
     @Override
+    protected void processarMensagens(ConsumerRecords<String, Order> records) {
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        super.processarMensagens(records);
+    }
+
+    @Override
     public void processarRecord(ConsumerRecord<String, Order> record) {
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         var order = record.value();
         var isFraud = isFraud(order);
@@ -70,4 +89,5 @@ public class FraudeDetectorConsumerService extends AbstractDefaultConsumer<Strin
         }
         return newOrderRejectedProducerService;
     }
+
 }

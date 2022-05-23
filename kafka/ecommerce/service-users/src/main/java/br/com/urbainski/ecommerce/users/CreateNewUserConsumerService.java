@@ -20,7 +20,6 @@ public class CreateNewUserConsumerService extends AbstractDefaultConsumer<String
 
     public CreateNewUserConsumerService(UsersRepository usersRepository) {
 
-        super(500);
         this.usersRepository = usersRepository;
     }
 
@@ -41,6 +40,12 @@ public class CreateNewUserConsumerService extends AbstractDefaultConsumer<String
 
     @Override
     public void processarRecord(ConsumerRecord<String, Order> record) {
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         var order = record.value();
 

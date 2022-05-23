@@ -3,6 +3,7 @@ package br.com.urbainski.ecommerce.email;
 import br.com.urbainski.ecommerce.commons.email.Email;
 import br.com.urbainski.ecommerce.commons.kafka.AbstractDefaultConsumer;
 import br.com.urbainski.ecommerce.commons.kafka.Topics;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,8 +13,16 @@ public class EmailConsumerService extends AbstractDefaultConsumer<String, Email>
 
     private static final Logger log = LoggerFactory.getLogger(EmailConsumerService.class);
 
-    public EmailConsumerService() {
-        super(1000);
+    public EmailConsumerService() {}
+
+    @Override
+    public void processarRecord(ConsumerRecord<String, Email> record) {
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

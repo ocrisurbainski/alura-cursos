@@ -11,9 +11,7 @@ public class LogConsumerService extends AbstractDefaultPatternConsumer<String, S
 
     private static final Logger log = LoggerFactory.getLogger(LogConsumerService.class);
 
-    public LogConsumerService() {
-        super(0);
-    }
+    public LogConsumerService() {}
 
     @Override
     public String getGroupId() {
