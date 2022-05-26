@@ -1,6 +1,7 @@
 package br.com.urbainski.ecommerce.fraude;
 
 import br.com.urbainski.ecommerce.commons.kafka.AbstractDefaultConsumer;
+import br.com.urbainski.ecommerce.commons.kafka.MyMessage;
 import br.com.urbainski.ecommerce.commons.kafka.Topics;
 import br.com.urbainski.ecommerce.commons.order.Order;
 import br.com.urbainski.ecommerce.order.NewOrderApprovedProducerService;
@@ -39,7 +40,7 @@ public class FraudeDetectorConsumerService extends AbstractDefaultConsumer<Strin
     }
 
     @Override
-    protected void processarMensagens(ConsumerRecords<String, Order> records) {
+    protected void processarMensagens(ConsumerRecords<String, MyMessage<Order>> records) {
 
         try {
             Thread.sleep(1000);
@@ -51,7 +52,7 @@ public class FraudeDetectorConsumerService extends AbstractDefaultConsumer<Strin
     }
 
     @Override
-    public void processarRecord(ConsumerRecord<String, Order> record) {
+    public void processarRecord(ConsumerRecord<String, MyMessage<Order>> record) {
 
         try {
             Thread.sleep(3000);
@@ -59,14 +60,15 @@ public class FraudeDetectorConsumerService extends AbstractDefaultConsumer<Strin
             throw new RuntimeException(e);
         }
 
-        var order = record.value();
+        var message = record.value();
+        var order = message.getPayload();
         var isFraud = isFraud(order);
 
         if (isFraud) {
-            getNewOrderRejectedProducerService().send(order.getEmail(), order);
+            getNewOrderRejectedProducerService().send(message.getCorrelationId(), order.getEmail(), order);
             getLog().info("Está ordem É suspeita de ser uma fraude.");
         } else {
-            getNewOrderApprovedProducerService().send(order.getEmail(), order);
+            getNewOrderApprovedProducerService().send(message.getCorrelationId(), order.getEmail(), order);
             getLog().info("Está ordem NÃO TEM suspeita de ser uma fraude.");
         }
     }

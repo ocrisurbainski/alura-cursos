@@ -11,7 +11,7 @@ public abstract class AbstractDefaultPatternConsumer<K, V> extends AbstractDefau
     }
 
     @Override
-    protected void subscribe(KafkaConsumer<K, V> consumer) {
+    protected void subscribe(KafkaConsumer<K, MyMessage<V>> consumer) {
         if (getTopics() == null || getTopics().isEmpty()) {
             throw new IllegalStateException("Deve haver pelo menos um topic no lista.");
         }

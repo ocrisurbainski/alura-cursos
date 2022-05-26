@@ -1,6 +1,7 @@
 package br.com.urbainski.ecommerce.http.servlet;
 
 import br.com.urbainski.ecommerce.commons.email.Email;
+import br.com.urbainski.ecommerce.commons.kafka.CorrelationId;
 import br.com.urbainski.ecommerce.commons.order.Order;
 import br.com.urbainski.ecommerce.email.EmailProducerService;
 import br.com.urbainski.ecommerce.order.NewOrderProducerService;
@@ -46,11 +47,13 @@ public class NewOrderServlet extends HttpServlet {
             value = new BigDecimal(valueStr);
         }
 
+        var correlationId = new CorrelationId(this.getClass().getSimpleName());
+
         var orderId = UUID.randomUUID().toString();
 
         var order = new Order(orderId, emailAddress, value);
 
-        newOrderProducerService.send(emailAddress, order);
+        newOrderProducerService.send(correlationId, emailAddress, order);
 
         var email = new Email(
                 orderId,
@@ -58,7 +61,7 @@ public class NewOrderServlet extends HttpServlet {
                 String.format("A venda da order: %s está sendo processada, aguarde...", orderId),
                 emailAddress);
 
-        emailProducerService.send(emailAddress, email);
+        emailProducerService.send(correlationId, emailAddress, email);
 
         log.info("Nova ordem enviada com sucesso!");
 

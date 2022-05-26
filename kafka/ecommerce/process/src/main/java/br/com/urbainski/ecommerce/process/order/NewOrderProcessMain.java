@@ -1,6 +1,7 @@
 package br.com.urbainski.ecommerce.process.order;
 
 import br.com.urbainski.ecommerce.commons.email.Email;
+import br.com.urbainski.ecommerce.commons.kafka.CorrelationId;
 import br.com.urbainski.ecommerce.commons.order.Order;
 import br.com.urbainski.ecommerce.email.EmailProducerService;
 import br.com.urbainski.ecommerce.order.NewOrderProducerService;
@@ -16,12 +17,14 @@ public class NewOrderProcessMain {
         try (var newOrderService = new NewOrderProducerService()) {
             try (var emailService = new EmailProducerService()) {
                 for (var i = 0; i < 10; i++) {
+                    var correlationId = new CorrelationId(NewOrderProcessMain.class.getSimpleName());
+
                     var orderId = UUID.randomUUID().toString();
                     var emailAddress = Math.random() + "@gmail.com";
 
                     var order = new Order(orderId, emailAddress, getValorAletorioOrder(random));
 
-                    newOrderService.send(emailAddress, order);
+                    newOrderService.send(correlationId, emailAddress, order);
 
                     var email = new Email(
                             orderId,
@@ -29,7 +32,7 @@ public class NewOrderProcessMain {
                             String.format("A venda da order: %s está sendo processada, aguarde...", orderId),
                             emailAddress);
 
-                    emailService.send(emailAddress, email);
+                    emailService.send(correlationId, emailAddress, email);
                 }
             }
         }

@@ -18,7 +18,7 @@ public abstract class AbstractDefaultConsumer<K, V> {
 
     public void consume() {
 
-        try (var consumer = new KafkaConsumer<K, V>(getProperties())) {
+        try (var consumer = new KafkaConsumer<K, MyMessage<V>>(getProperties())) {
 
             subscribe(consumer);
 
@@ -26,11 +26,11 @@ public abstract class AbstractDefaultConsumer<K, V> {
         }
     }
 
-    protected void subscribe(KafkaConsumer<K, V> consumer) {
+    protected void subscribe(KafkaConsumer<K, MyMessage<V>> consumer) {
         consumer.subscribe(getTopics().stream().map(Topics::getTopicName).collect(Collectors.toList()));
     }
 
-    private void consumirMensagens(KafkaConsumer<K, V> consumer) {
+    private void consumirMensagens(KafkaConsumer<K, MyMessage<V>> consumer) {
 
         while (true) {
 
@@ -40,7 +40,7 @@ public abstract class AbstractDefaultConsumer<K, V> {
         }
     }
 
-    protected void processarMensagens(ConsumerRecords<K, V> records) {
+    protected void processarMensagens(ConsumerRecords<K, MyMessage<V>> records) {
 
         if (records.isEmpty()) {
 
@@ -72,7 +72,7 @@ public abstract class AbstractDefaultConsumer<K, V> {
 
     public abstract Logger getLog();
 
-    public void processarRecord(ConsumerRecord<K, V> record) {
+    public void processarRecord(ConsumerRecord<K, MyMessage<V>> record) {
 
     }
 
@@ -85,7 +85,6 @@ public abstract class AbstractDefaultConsumer<K, V> {
         return KafkaProperties.getKafkaConsumerProperties(
                 getGroupId(),
                 KafkaTypesHelper.convertToKafkaTypes(clazzKey),
-                KafkaTypesHelper.convertToKafkaTypes(clazzValue),
                 clazzValue.getName());
     }
 

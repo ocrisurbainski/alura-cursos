@@ -1,6 +1,7 @@
 package br.com.urbainski.ecommerce.users;
 
 import br.com.urbainski.ecommerce.commons.kafka.AbstractDefaultConsumer;
+import br.com.urbainski.ecommerce.commons.kafka.MyMessage;
 import br.com.urbainski.ecommerce.commons.kafka.Topics;
 import br.com.urbainski.ecommerce.commons.order.Order;
 import br.com.urbainski.ecommerce.users.model.Users;
@@ -39,7 +40,7 @@ public class CreateNewUserConsumerService extends AbstractDefaultConsumer<String
     }
 
     @Override
-    public void processarRecord(ConsumerRecord<String, Order> record) {
+    public void processarRecord(ConsumerRecord<String, MyMessage<Order>> record) {
 
         try {
             Thread.sleep(2000);
@@ -47,7 +48,8 @@ public class CreateNewUserConsumerService extends AbstractDefaultConsumer<String
             throw new RuntimeException(e);
         }
 
-        var order = record.value();
+        var message = record.value();
+        var order = message.getPayload();
 
         if (usersRepository.existsUsersByEmail(order.getEmail())) {
 

@@ -11,16 +11,17 @@ import java.util.concurrent.ExecutionException;
 
 public abstract class AbstractDefaultProducer<K, V> implements AutoCloseable {
 
-    private final KafkaProducer<K, V> producer;
+    private final KafkaProducer<K, MyMessage<V>> producer;
 
     public AbstractDefaultProducer() {
 
-        this.producer = new KafkaProducer<K, V>(getProperties());
+        this.producer = new KafkaProducer<K, MyMessage<V>>(getProperties());
     }
 
-    public void send(K key, V message) {
+    public void send(CorrelationId correlationId, K key, V message) {
         try {
-            var record = new ProducerRecord<>(getTopic().name(), key, message);
+            var myMessage = new MyMessage<V>(correlationId, message);
+            var record = new ProducerRecord<>(getTopic().name(), key, myMessage);
             producer.send(record, getDefaultCallback()).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -58,11 +59,8 @@ public abstract class AbstractDefaultProducer<K, V> implements AutoCloseable {
     private Properties getProperties() {
         var parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
         var clazzKey = (Class<K>) parameterizedType.getActualTypeArguments()[0];
-        var clazzValue = (Class<V>) parameterizedType.getActualTypeArguments()[1];
 
-        return KafkaProperties.getKafkaProducerProperties(
-                KafkaTypesHelper.convertToKafkaTypes(clazzKey),
-                KafkaTypesHelper.convertToKafkaTypes(clazzValue));
+        return KafkaProperties.getKafkaProducerProperties(KafkaTypesHelper.convertToKafkaTypes(clazzKey));
     }
 
 }
