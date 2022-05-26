@@ -22,4 +22,8 @@ public class CorrelationId {
                 '}';
     }
 
+    public CorrelationId continueWith(String title) {
+        return new CorrelationId(String.format("%s-%s", id, title));
+    }
+
 }
