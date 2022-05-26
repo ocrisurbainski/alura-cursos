@@ -28,7 +28,9 @@
         <module>service-users</module>
 		<module>service-http-ecommerce</module>
         <module>service-new-order-email</module>
-    </modules>
+		<module>service-new-order-approved-email</module>
+		<module>service-new-order-rejected-email</module>
+	</modules>
 
 	<dependencyManagement>
 		<dependencies>
