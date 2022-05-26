@@ -1,6 +1,6 @@
-package br.com.urbainski.ecommerce.commons.kafka.impl;
+package br.com.urbainski.ecommerce.commons.kafka.producer.impl;
 
-import br.com.urbainski.ecommerce.commons.kafka.AbstractDefaultProducer;
+import br.com.urbainski.ecommerce.commons.kafka.producer.AbstractDefaultProducer;
 import br.com.urbainski.ecommerce.commons.kafka.Topics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,6 @@
 package br.com.urbainski.ecommerce.order;
 
-import br.com.urbainski.ecommerce.commons.kafka.AbstractDefaultProducer;
+import br.com.urbainski.ecommerce.commons.kafka.producer.AbstractDefaultProducer;
 import br.com.urbainski.ecommerce.commons.kafka.Topics;
 import br.com.urbainski.ecommerce.commons.order.Order;
 import org.slf4j.Logger;

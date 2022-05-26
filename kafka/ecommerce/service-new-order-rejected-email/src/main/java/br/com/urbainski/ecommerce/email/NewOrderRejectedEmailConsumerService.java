@@ -1,7 +1,7 @@
 package br.com.urbainski.ecommerce.email;
 
 import br.com.urbainski.ecommerce.commons.email.Email;
-import br.com.urbainski.ecommerce.commons.kafka.AbstractDefaultConsumer;
+import br.com.urbainski.ecommerce.commons.kafka.consumer.AbstractDefaultConsumer;
 import br.com.urbainski.ecommerce.commons.kafka.MyMessage;
 import br.com.urbainski.ecommerce.commons.kafka.Topics;
 import br.com.urbainski.ecommerce.commons.order.Order;

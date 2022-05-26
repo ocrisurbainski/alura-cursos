@@ -1,5 +1,6 @@
-package br.com.urbainski.ecommerce.commons.kafka;
+package br.com.urbainski.ecommerce.commons.kafka.producer;
 
+import br.com.urbainski.ecommerce.commons.kafka.*;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;

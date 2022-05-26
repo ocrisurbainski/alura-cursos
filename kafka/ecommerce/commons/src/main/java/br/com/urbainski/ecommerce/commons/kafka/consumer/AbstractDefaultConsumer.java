@@ -1,6 +1,10 @@
-package br.com.urbainski.ecommerce.commons.kafka;
+package br.com.urbainski.ecommerce.commons.kafka.consumer;
 
-import br.com.urbainski.ecommerce.commons.kafka.impl.DeadLetterProducer;
+import br.com.urbainski.ecommerce.commons.kafka.KafkaProperties;
+import br.com.urbainski.ecommerce.commons.kafka.KafkaTypesHelper;
+import br.com.urbainski.ecommerce.commons.kafka.MyMessage;
+import br.com.urbainski.ecommerce.commons.kafka.Topics;
+import br.com.urbainski.ecommerce.commons.kafka.producer.impl.DeadLetterProducer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;

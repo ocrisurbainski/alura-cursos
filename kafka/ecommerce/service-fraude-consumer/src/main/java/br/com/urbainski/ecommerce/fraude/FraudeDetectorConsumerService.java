@@ -1,9 +1,9 @@
 package br.com.urbainski.ecommerce.fraude;
 
-import br.com.urbainski.ecommerce.commons.kafka.AbstractDefaultConsumer;
+import br.com.urbainski.ecommerce.commons.kafka.consumer.AbstractDefaultConsumer;
 import br.com.urbainski.ecommerce.commons.kafka.MyMessage;
 import br.com.urbainski.ecommerce.commons.kafka.Topics;
-import br.com.urbainski.ecommerce.commons.kafka.impl.DeadLetterProducer;
+import br.com.urbainski.ecommerce.commons.kafka.producer.impl.DeadLetterProducer;
 import br.com.urbainski.ecommerce.commons.order.Order;
 import br.com.urbainski.ecommerce.order.NewOrderApprovedProducerService;
 import br.com.urbainski.ecommerce.order.NewOrderRejectedProducerService;

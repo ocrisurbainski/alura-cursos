@@ -1,5 +1,7 @@
-package br.com.urbainski.ecommerce.commons.kafka;
+package br.com.urbainski.ecommerce.commons.kafka.producer;
 
+import br.com.urbainski.ecommerce.commons.kafka.MyMessage;
+import br.com.urbainski.ecommerce.commons.kafka.consumer.AbstractDefaultConsumer;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 import java.util.regex.Pattern;

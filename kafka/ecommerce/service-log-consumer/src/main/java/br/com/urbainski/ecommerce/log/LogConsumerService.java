@@ -1,6 +1,6 @@
 package br.com.urbainski.ecommerce.log;
 
-import br.com.urbainski.ecommerce.commons.kafka.AbstractDefaultPatternConsumer;
+import br.com.urbainski.ecommerce.commons.kafka.producer.AbstractDefaultPatternConsumer;
 import br.com.urbainski.ecommerce.commons.kafka.Topics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
