@@ -1,9 +1,7 @@
 package br.com.urbainski.ecommerce.process.order;
 
-import br.com.urbainski.ecommerce.commons.email.Email;
 import br.com.urbainski.ecommerce.commons.kafka.CorrelationId;
 import br.com.urbainski.ecommerce.commons.order.Order;
-import br.com.urbainski.ecommerce.email.EmailProducerService;
 import br.com.urbainski.ecommerce.order.NewOrderProducerService;
 
 import java.math.BigDecimal;
@@ -15,25 +13,15 @@ public class NewOrderProcessMain {
     public static void main(String[] args) {
         var random = new Random();
         try (var newOrderService = new NewOrderProducerService()) {
-            try (var emailService = new EmailProducerService()) {
-                for (var i = 0; i < 10; i++) {
-                    var correlationId = new CorrelationId(NewOrderProcessMain.class.getSimpleName());
+            for (var i = 0; i < 10; i++) {
+                var correlationId = new CorrelationId(NewOrderProcessMain.class.getSimpleName());
 
-                    var orderId = UUID.randomUUID().toString();
-                    var emailAddress = Math.random() + "@gmail.com";
+                var orderId = UUID.randomUUID().toString();
+                var emailAddress = Math.random() + "@gmail.com";
 
-                    var order = new Order(orderId, emailAddress, getValorAletorioOrder(random));
+                var order = new Order(orderId, emailAddress, getValorAletorioOrder(random));
 
-                    newOrderService.send(correlationId, emailAddress, order);
-
-                    var email = new Email(
-                            orderId,
-                            "Nova venda",
-                            String.format("A venda da order: %s está sendo processada, aguarde...", orderId),
-                            emailAddress);
-
-                    emailService.send(correlationId, emailAddress, email);
-                }
+                newOrderService.send(correlationId, emailAddress, order);
             }
         }
     }

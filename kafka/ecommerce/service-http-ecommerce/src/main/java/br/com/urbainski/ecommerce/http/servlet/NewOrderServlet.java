@@ -1,9 +1,7 @@
 package br.com.urbainski.ecommerce.http.servlet;
 
-import br.com.urbainski.ecommerce.commons.email.Email;
 import br.com.urbainski.ecommerce.commons.kafka.CorrelationId;
 import br.com.urbainski.ecommerce.commons.order.Order;
-import br.com.urbainski.ecommerce.email.EmailProducerService;
 import br.com.urbainski.ecommerce.order.NewOrderProducerService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -22,11 +20,9 @@ public class NewOrderServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(NewOrderServlet.class);
 
     private final NewOrderProducerService newOrderProducerService;
-    private final EmailProducerService emailProducerService;
 
     public NewOrderServlet() {
         this.newOrderProducerService = new NewOrderProducerService();
-        this.emailProducerService = new EmailProducerService();
     }
 
     @Override
@@ -57,14 +53,6 @@ public class NewOrderServlet extends HttpServlet {
 
         newOrderProducerService.send(correlationId, emailAddress, order);
 
-        var email = new Email(
-                orderId,
-                "Nova venda",
-                String.format("A venda da order: %s está sendo processada, aguarde...", orderId),
-                emailAddress);
-
-        emailProducerService.send(correlationId, emailAddress, email);
-
         log.info("Nova ordem enviada com sucesso!");
 
         resp.setStatus(HttpServletResponse.SC_OK);
@@ -76,7 +64,6 @@ public class NewOrderServlet extends HttpServlet {
         super.destroy();
 
         this.newOrderProducerService.close();
-        this.emailProducerService.close();
     }
 
     private BigDecimal getValorAletorioOrder(Random random) {

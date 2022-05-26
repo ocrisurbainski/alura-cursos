@@ -27,7 +27,8 @@
 		<module>service-new-order-producer</module>
         <module>service-users</module>
 		<module>service-http-ecommerce</module>
-	</modules>
+        <module>service-new-order-email</module>
+    </modules>
 
 	<dependencyManagement>
 		<dependencies>
