@@ -20,4 +20,8 @@ public enum Topics {
         return this.name();
     }
 
+    public String getDeadLetterTopicName() {
+        return this.name() + "_DL";
+    }
+
 }

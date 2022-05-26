@@ -21,7 +21,7 @@ public abstract class AbstractDefaultProducer<K, V> implements AutoCloseable {
     public void send(CorrelationId correlationId, K key, V message) {
         try {
             var myMessage = new MyMessage<V>(correlationId, message);
-            var record = new ProducerRecord<>(getTopic().name(), key, myMessage);
+            var record = new ProducerRecord<>(getTopicName(), key, myMessage);
             producer.send(record, getDefaultCallback()).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -53,6 +53,10 @@ public abstract class AbstractDefaultProducer<K, V> implements AutoCloseable {
     @Override
     public void close() {
         this.producer.close();
+    }
+
+    protected String getTopicName() {
+        return getTopic().getTopicName();
     }
 
     @SuppressWarnings("unchecked")

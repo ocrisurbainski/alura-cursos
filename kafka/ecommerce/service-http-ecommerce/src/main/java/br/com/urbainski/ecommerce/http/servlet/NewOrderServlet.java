@@ -49,6 +49,8 @@ public class NewOrderServlet extends HttpServlet {
 
         var correlationId = new CorrelationId(this.getClass().getSimpleName());
 
+        log.info("CorrelationId={}", correlationId.getId());
+
         var orderId = UUID.randomUUID().toString();
 
         var order = new Order(orderId, emailAddress, value);

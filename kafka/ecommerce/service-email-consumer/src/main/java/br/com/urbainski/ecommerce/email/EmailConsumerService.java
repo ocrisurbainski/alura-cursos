@@ -24,6 +24,10 @@ public class EmailConsumerService extends AbstractDefaultConsumer<String, Email>
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
+        if (Character.isDigit(record.value().getPayload().getOrderId().charAt(0))) {
+            throw new RuntimeException("Email Problem.");
+        }
     }
 
     @Override

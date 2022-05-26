@@ -1,5 +1,6 @@
 package br.com.urbainski.ecommerce.commons.kafka;
 
+import br.com.urbainski.ecommerce.commons.kafka.impl.DeadLetterProducer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -13,7 +14,10 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractDefaultConsumer<K, V> {
 
+    private DeadLetterProducer deadLetterProducer;
+
     public AbstractDefaultConsumer() {
+
     }
 
     public void consume() {
@@ -51,19 +55,45 @@ public abstract class AbstractDefaultConsumer<K, V> {
         getLog().info(String.format("Encontrei %s registros.", records.count()));
 
         for (var record : records) {
-            getLog().info("----------------------------------------------------");
-            getLog().info("Processando nova mensagem");
-            getLog().info(getClass().getName());
-            getLog().info(String.format("Topic=%s", record.topic()));
-            getLog().info(String.format("Chave=%s", record.key().toString()));
-            getLog().info(String.format("Valor=%s", record.value().toString()));
-            getLog().info(String.format("Partição=%s", record.partition()));
-            getLog().info(String.format("Offset=%s", record.offset()));
 
-            processarRecord(record);
+            var message = record.value();
 
-            getLog().info("Mensagem processada");
+            try {
+                getLog().info("----------------------------------------------------");
+                getLog().info("Processando nova mensagem");
+                getLog().info(getClass().getName());
+                getLog().info(String.format("Topic=%s", record.topic()));
+                getLog().info(String.format("Chave=%s", record.key().toString()));
+                getLog().info(String.format("Valor=%s", message.toString()));
+                getLog().info(String.format("Partição=%s", record.partition()));
+                getLog().info(String.format("Offset=%s", record.offset()));
+
+                processarRecord(record);
+
+                getLog().info("Mensagem processada");
+            } catch (Exception ex) {
+
+                ex.printStackTrace();
+
+                getDeadLetterProducer().send(
+                        message.getCorrelationId().continueWith(getClass().getSimpleName()),
+                        record.key().toString(),
+                        message.getPayload());
+            }
         }
+    }
+
+    protected DeadLetterProducer getDeadLetterProducer() {
+
+        if (deadLetterProducer == null) {
+            deadLetterProducer = createDeadLetterProducer();
+        }
+        return deadLetterProducer;
+    }
+
+    protected DeadLetterProducer createDeadLetterProducer() {
+        var firstTopic = getTopics().get(0);
+        return new DeadLetterProducer(firstTopic);
     }
 
     public abstract String getGroupId();
