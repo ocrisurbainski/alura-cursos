@@ -14,8 +14,6 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractDefaultConsumer<K, V> {
 
-    private DeadLetterProducer deadLetterProducer;
-
     public AbstractDefaultConsumer() {
 
     }
@@ -36,15 +34,17 @@ public abstract class AbstractDefaultConsumer<K, V> {
 
     private void consumirMensagens(KafkaConsumer<K, MyMessage<V>> consumer) {
 
-        while (true) {
+        try (var deadLetterProducer = createDeadLetterProducer()) {
+            while (true) {
 
-            var records = consumer.poll(Duration.ofMillis(100));
+                var records = consumer.poll(Duration.ofMillis(100));
 
-            processarMensagens(records);
+                processarMensagens(deadLetterProducer, records);
+            }
         }
     }
 
-    protected void processarMensagens(ConsumerRecords<K, MyMessage<V>> records) {
+    protected void processarMensagens(DeadLetterProducer deadLetterProducer, ConsumerRecords<K, MyMessage<V>> records) {
 
         if (records.isEmpty()) {
 
@@ -75,20 +75,12 @@ public abstract class AbstractDefaultConsumer<K, V> {
 
                 ex.printStackTrace();
 
-                getDeadLetterProducer().send(
+                deadLetterProducer.send(
                         message.getCorrelationId().continueWith(getClass().getSimpleName()),
                         record.key().toString(),
                         message.getPayload());
             }
         }
-    }
-
-    protected DeadLetterProducer getDeadLetterProducer() {
-
-        if (deadLetterProducer == null) {
-            deadLetterProducer = createDeadLetterProducer();
-        }
-        return deadLetterProducer;
     }
 
     protected DeadLetterProducer createDeadLetterProducer() {

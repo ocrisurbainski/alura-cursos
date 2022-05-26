@@ -3,6 +3,7 @@ package br.com.urbainski.ecommerce.fraude;
 import br.com.urbainski.ecommerce.commons.kafka.AbstractDefaultConsumer;
 import br.com.urbainski.ecommerce.commons.kafka.MyMessage;
 import br.com.urbainski.ecommerce.commons.kafka.Topics;
+import br.com.urbainski.ecommerce.commons.kafka.impl.DeadLetterProducer;
 import br.com.urbainski.ecommerce.commons.order.Order;
 import br.com.urbainski.ecommerce.order.NewOrderApprovedProducerService;
 import br.com.urbainski.ecommerce.order.NewOrderRejectedProducerService;
@@ -40,7 +41,9 @@ public class FraudeDetectorConsumerService extends AbstractDefaultConsumer<Strin
     }
 
     @Override
-    protected void processarMensagens(ConsumerRecords<String, MyMessage<Order>> records) {
+    protected void processarMensagens(
+            DeadLetterProducer deadLetterProducer,
+            ConsumerRecords<String, MyMessage<Order>> records) {
 
         try {
             Thread.sleep(1000);
@@ -48,7 +51,7 @@ public class FraudeDetectorConsumerService extends AbstractDefaultConsumer<Strin
             throw new RuntimeException(e);
         }
 
-        super.processarMensagens(records);
+        super.processarMensagens(deadLetterProducer, records);
     }
 
     @Override
