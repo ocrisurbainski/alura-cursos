@@ -1,10 +1,10 @@
-package br.com.urbainski.ecommerce.users;
+package br.com.urbainski.ecommerce.users.consumer;
 
 import br.com.urbainski.ecommerce.commons.kafka.consumer.AbstractDefaultConsumer;
 import br.com.urbainski.ecommerce.commons.kafka.MyMessage;
 import br.com.urbainski.ecommerce.commons.kafka.Topics;
 import br.com.urbainski.ecommerce.commons.order.Order;
-import br.com.urbainski.ecommerce.users.model.Users;
+import br.com.urbainski.ecommerce.commons.user.Users;
 import br.com.urbainski.ecommerce.users.repository.UsersRepository;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;

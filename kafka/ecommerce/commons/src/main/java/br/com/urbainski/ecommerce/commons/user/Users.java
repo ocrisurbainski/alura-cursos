@@ -1,4 +1,4 @@
-package br.com.urbainski.ecommerce.users.model;
+package br.com.urbainski.ecommerce.commons.user;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

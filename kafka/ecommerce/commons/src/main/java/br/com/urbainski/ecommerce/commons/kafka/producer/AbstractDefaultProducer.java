@@ -4,11 +4,13 @@ import br.com.urbainski.ecommerce.commons.kafka.*;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public abstract class AbstractDefaultProducer<K, V> implements AutoCloseable {
 
@@ -21,12 +23,16 @@ public abstract class AbstractDefaultProducer<K, V> implements AutoCloseable {
 
     public void send(CorrelationId correlationId, K key, V message) {
         try {
-            var myMessage = new MyMessage<V>(correlationId, message);
-            var record = new ProducerRecord<>(getTopicName(), key, myMessage);
-            producer.send(record, getDefaultCallback()).get();
+            sendAsync(correlationId, key, message).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Future<RecordMetadata> sendAsync(CorrelationId correlationId, K key, V message) {
+        var myMessage = new MyMessage<V>(correlationId, message);
+        var record = new ProducerRecord<>(getTopicName(), key, myMessage);
+        return producer.send(record, getDefaultCallback());
     }
 
     protected Callback getDefaultCallback() {

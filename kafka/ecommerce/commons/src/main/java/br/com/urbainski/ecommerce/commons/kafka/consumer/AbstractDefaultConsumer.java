@@ -51,8 +51,6 @@ public abstract class AbstractDefaultConsumer<K, V> {
     protected void processarMensagens(DeadLetterProducer deadLetterProducer, ConsumerRecords<K, MyMessage<V>> records) {
 
         if (records.isEmpty()) {
-
-            getLog().info("Nenhuma mensagem encontrada");
             return;
         }
 
