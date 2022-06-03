@@ -3,8 +3,6 @@ package br.com.urbainski.escola.util;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 public class ValidationUtilsTest {
 
     @Test
