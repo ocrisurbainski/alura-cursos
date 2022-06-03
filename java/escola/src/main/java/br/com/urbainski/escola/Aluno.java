@@ -11,14 +11,14 @@ public class Aluno {
     private final Email email;
     private final List<Telefone> telelefones;
 
-    public Aluno(String nome, String cpf, String email) {
+    public Aluno(String nome, CPF cpf, Email email) {
         this(nome, cpf, email, new ArrayList<>());
     }
 
-    public Aluno(String nome, String cpf, String email, List<Telefone> telelefones) {
+    public Aluno(String nome, CPF cpf, Email email, List<Telefone> telelefones) {
         this.nome = nome;
-        this.cpf = new CPF(cpf);
-        this.email = new Email(email);
+        this.cpf = cpf;
+        this.email = email;
         this.telelefones = Objects.requireNonNullElse(telelefones, new ArrayList<>());
     }
 
@@ -41,4 +41,5 @@ public class Aluno {
     public void addTelefone(String ddd, String numero) {
         this.telelefones.add(new Telefone(ddd, numero));
     }
+
 }
