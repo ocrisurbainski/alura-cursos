@@ -11,6 +11,10 @@ public class Aluno {
     private final Email email;
     private final List<Telefone> telelefones;
 
+    public Aluno(String nome, String cpf, String email) {
+        this(nome, cpf, email, new ArrayList<>());
+    }
+
     public Aluno(String nome, String cpf, String email, List<Telefone> telelefones) {
         this.nome = nome;
         this.cpf = new CPF(cpf);
