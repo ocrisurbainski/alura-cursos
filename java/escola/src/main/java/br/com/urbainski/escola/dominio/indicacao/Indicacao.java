@@ -1,4 +1,6 @@
-package br.com.urbainski.escola;
+package br.com.urbainski.escola.dominio.indicacao;
+
+import br.com.urbainski.escola.dominio.aluno.Aluno;
 
 import java.time.LocalDateTime;
 

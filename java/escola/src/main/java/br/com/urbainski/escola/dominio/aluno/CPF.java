@@ -1,4 +1,4 @@
-package br.com.urbainski.escola;
+package br.com.urbainski.escola.dominio.aluno;
 
 import br.com.urbainski.escola.util.ValidationUtils;
 

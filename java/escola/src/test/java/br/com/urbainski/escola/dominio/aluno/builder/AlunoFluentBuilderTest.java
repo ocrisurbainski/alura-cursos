@@ -1,5 +1,6 @@
-package br.com.urbainski.escola;
+package br.com.urbainski.escola.dominio.aluno.builder;
 
+import br.com.urbainski.escola.dominio.aluno.builder.AlunoBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

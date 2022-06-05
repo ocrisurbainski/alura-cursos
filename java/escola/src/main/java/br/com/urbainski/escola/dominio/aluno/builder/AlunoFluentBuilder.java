@@ -1,4 +1,9 @@
-package br.com.urbainski.escola;
+package br.com.urbainski.escola.dominio.aluno.builder;
+
+import br.com.urbainski.escola.dominio.aluno.Aluno;
+import br.com.urbainski.escola.dominio.aluno.CPF;
+import br.com.urbainski.escola.dominio.aluno.Email;
+import br.com.urbainski.escola.dominio.aluno.Telefone;
 
 import java.util.ArrayList;
 import java.util.List;
