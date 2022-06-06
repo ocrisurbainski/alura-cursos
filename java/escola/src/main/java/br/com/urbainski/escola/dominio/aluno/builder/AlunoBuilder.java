@@ -1,8 +1,15 @@
 package br.com.urbainski.escola.dominio.aluno.builder;
 
 import br.com.urbainski.escola.dominio.aluno.Aluno;
+import br.com.urbainski.escola.dominio.aluno.Telefone;
+
+import java.util.List;
 
 public interface AlunoBuilder {
+
+    interface AlunoNomeBuilder {
+        AlunoCpfBuilder withNome(String nome);
+    }
 
     interface AlunoCpfBuilder {
         AlunoEmailBuilder withCpf(String cpf);
@@ -14,11 +21,20 @@ public interface AlunoBuilder {
 
     interface AlunoTelefoneBuilder {
         AlunoTelefoneBuilder withTelefone(String ddd, String telefone);
+
+        AlunoTelefoneBuilder withTelefone(Integer id, String ddd, String telefone);
+
+        AlunoTelefoneBuilder withTelefones(List<Telefone> telefones);
+
         Aluno build();
     }
 
-    static AlunoCpfBuilder withNome(String nome) {
-        return new AlunoFluentBuilder(nome);
+    static AlunoNomeBuilder withId(Integer id) {
+        return new AlunoFluentBuilder(id);
+    }
+
+    static AlunoNomeBuilder withoutId() {
+        return new AlunoFluentBuilder(null);
     }
 
 }
