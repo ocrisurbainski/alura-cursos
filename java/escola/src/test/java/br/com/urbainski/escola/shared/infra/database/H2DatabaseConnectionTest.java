@@ -1,4 +1,4 @@
-package br.com.urbainski.escola.shared.infra.database.impl;
+package br.com.urbainski.escola.shared.infra.database;
 
 import br.com.urbainski.escola.shared.infra.database.H2DatabaseConnection;
 import br.com.urbainski.escola.util.Constantes;
