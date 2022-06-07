@@ -53,6 +53,7 @@ public class AlunoRepositoryJDBCImpl implements AlunoRepository {
             aluno.setId(idAluno);
             aluno.getTelelefones().forEach(telefone -> telefoneRepository.salvar(aluno.getId(), telefone));
         } catch (Exception ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
             DatabaseUtil.rollback(connection, savepoint);
             throw new RuntimeException(ex.getMessage(), ex);
         }
