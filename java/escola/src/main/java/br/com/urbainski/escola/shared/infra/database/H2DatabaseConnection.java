@@ -52,6 +52,7 @@ public class H2DatabaseConnection implements SqlDatabaseConnection {
     private void createTables() {
         createTableAluno();
         createTableTelefone();
+        createTableSelo();
     }
 
     private void createTableAluno() {
@@ -90,6 +91,22 @@ public class H2DatabaseConnection implements SqlDatabaseConnection {
         logger.info("h2 create table of telefones...");
 
         executeSql(tblTelefone);
+    }
+
+    private void createTableSelo() {
+        var columnId = "id bigint auto_increment primary key";
+        var columnNome = "nome varchar(255) not null";
+        var columnCpf = "cpf varchar(11) not null";
+
+        var tblSelo = String.format(
+                "create table if not exists selo (%s, %s, %s)",
+                columnId,
+                columnNome,
+                columnCpf);
+
+        logger.info("h2 create table of selos...");
+
+        executeSql(tblSelo);
     }
 
     private void executeSql(String sql) {
