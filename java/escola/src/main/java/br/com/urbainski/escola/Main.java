@@ -1,6 +1,6 @@
 package br.com.urbainski.escola;
 
-import br.com.urbainski.escola.infra.database.impl.H2DatabaseConnection;
+import br.com.urbainski.escola.shared.infra.database.H2DatabaseConnection;
 import br.com.urbainski.escola.util.Constantes;
 
 import java.util.logging.Level;

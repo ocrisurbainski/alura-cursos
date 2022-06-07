@@ -1,15 +1,15 @@
 package br.com.urbainski.escola;
 
-import br.com.urbainski.escola.aplicacao.aluno.matricular.MatricularAluno;
-import br.com.urbainski.escola.aplicacao.aluno.matricular.MatricularAlunoDTO;
-import br.com.urbainski.escola.dominio.aluno.AlunoMatriculadoLog;
-import br.com.urbainski.escola.dominio.aluno.AlunoRepository;
-import br.com.urbainski.escola.dominio.aluno.TelefoneRepository;
-import br.com.urbainski.escola.dominio.evento.PublicadorEvento;
-import br.com.urbainski.escola.dominio.evento.PublicadorEventoDefault;
-import br.com.urbainski.escola.infra.aluno.AlunoRepositoryJDBCImpl;
-import br.com.urbainski.escola.infra.aluno.TelefoneRepositoryJDBCImpl;
-import br.com.urbainski.escola.infra.database.impl.H2DatabaseConnection;
+import br.com.urbainski.escola.academico.aplicacao.aluno.matricular.MatricularAluno;
+import br.com.urbainski.escola.academico.aplicacao.aluno.matricular.MatricularAlunoDTO;
+import br.com.urbainski.escola.academico.dominio.aluno.AlunoMatriculadoLog;
+import br.com.urbainski.escola.academico.dominio.aluno.AlunoRepository;
+import br.com.urbainski.escola.academico.dominio.aluno.TelefoneRepository;
+import br.com.urbainski.escola.shared.dominio.evento.PublicadorEvento;
+import br.com.urbainski.escola.shared.dominio.evento.PublicadorEventoDefault;
+import br.com.urbainski.escola.academico.infra.aluno.AlunoRepositoryJDBCImpl;
+import br.com.urbainski.escola.academico.infra.aluno.TelefoneRepositoryJDBCImpl;
+import br.com.urbainski.escola.shared.infra.database.H2DatabaseConnection;
 import br.com.urbainski.escola.util.Constantes;
 
 import java.util.Scanner;
