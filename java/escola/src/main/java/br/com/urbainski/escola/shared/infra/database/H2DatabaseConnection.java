@@ -1,7 +1,7 @@
 package br.com.urbainski.escola.shared.infra.database;
 
-import br.com.urbainski.escola.util.Constantes;
-import br.com.urbainski.escola.util.ValidationUtils;
+import br.com.urbainski.escola.shared.util.Constantes;
+import br.com.urbainski.escola.shared.util.ValidationUtils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

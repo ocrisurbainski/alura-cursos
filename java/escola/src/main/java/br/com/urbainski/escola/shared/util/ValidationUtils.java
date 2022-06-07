@@ -1,4 +1,4 @@
-package br.com.urbainski.escola.util;
+package br.com.urbainski.escola.shared.util;
 
 import java.util.regex.Pattern;
 

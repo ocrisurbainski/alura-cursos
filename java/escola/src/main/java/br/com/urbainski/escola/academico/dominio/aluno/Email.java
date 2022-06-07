@@ -1,6 +1,6 @@
 package br.com.urbainski.escola.academico.dominio.aluno;
 
-import br.com.urbainski.escola.util.ValidationUtils;
+import br.com.urbainski.escola.shared.util.ValidationUtils;
 
 public class Email {
 

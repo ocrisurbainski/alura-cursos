@@ -8,7 +8,7 @@ import br.com.urbainski.escola.shared.dominio.evento.PublicadorEvento;
 import br.com.urbainski.escola.academico.infra.aluno.AlunoRepositoryJDBCImpl;
 import br.com.urbainski.escola.academico.infra.aluno.TelefoneRepositoryJDBCImpl;
 import br.com.urbainski.escola.shared.infra.database.H2DatabaseConnection;
-import br.com.urbainski.escola.util.Constantes;
+import br.com.urbainski.escola.shared.util.Constantes;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

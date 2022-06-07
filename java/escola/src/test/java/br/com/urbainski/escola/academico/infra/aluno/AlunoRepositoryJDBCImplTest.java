@@ -6,7 +6,7 @@ import br.com.urbainski.escola.shared.dominio.CPF;
 import br.com.urbainski.escola.academico.dominio.aluno.Telefone;
 import br.com.urbainski.escola.academico.dominio.aluno.builder.AlunoBuilder;
 import br.com.urbainski.escola.shared.infra.database.H2DatabaseConnection;
-import br.com.urbainski.escola.util.Constantes;
+import br.com.urbainski.escola.shared.util.Constantes;
 import org.junit.jupiter.api.*;
 
 import java.sql.SQLException;
