@@ -9,6 +9,7 @@ import br.com.urbainski.escola.academico.infra.aluno.AlunoRepositoryJDBCImpl;
 import br.com.urbainski.escola.academico.infra.aluno.TelefoneRepositoryJDBCImpl;
 import br.com.urbainski.escola.shared.infra.database.H2DatabaseConnection;
 import br.com.urbainski.escola.shared.util.Constantes;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.sql.SQLException;
 
 @ExtendWith(MockitoExtension.class)
 public class MatricularAlunoTest {
@@ -34,6 +37,11 @@ public class MatricularAlunoTest {
         var telefoneRepository = new TelefoneRepositoryJDBCImpl(connection);
 
         alunoRepository = new AlunoRepositoryJDBCImpl(connection, telefoneRepository);
+    }
+
+    @AfterAll
+    public static void destroy() throws SQLException {
+        H2DatabaseConnection.clear();
     }
 
     @Test
