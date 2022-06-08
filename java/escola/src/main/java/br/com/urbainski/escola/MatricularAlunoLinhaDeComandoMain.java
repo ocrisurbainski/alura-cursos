@@ -5,6 +5,9 @@ import br.com.urbainski.escola.academico.aplicacao.aluno.matricular.MatricularAl
 import br.com.urbainski.escola.academico.dominio.aluno.AlunoMatriculadoLog;
 import br.com.urbainski.escola.academico.dominio.aluno.AlunoRepository;
 import br.com.urbainski.escola.academico.dominio.aluno.TelefoneRepository;
+import br.com.urbainski.escola.gameficacao.aplicacao.selo.GeraSeloAlunoNovato;
+import br.com.urbainski.escola.gameficacao.dominio.selo.SeloRepository;
+import br.com.urbainski.escola.gameficacao.infra.selo.SeloRepositoryJDBCImpl;
 import br.com.urbainski.escola.shared.dominio.evento.PublicadorEvento;
 import br.com.urbainski.escola.shared.dominio.evento.PublicadorEventoDefault;
 import br.com.urbainski.escola.academico.infra.aluno.AlunoRepositoryJDBCImpl;
@@ -24,9 +27,11 @@ public class MatricularAlunoLinhaDeComandoMain {
 
             TelefoneRepository telefoneRepository = new TelefoneRepositoryJDBCImpl(connection);
             AlunoRepository alunoRepository = new AlunoRepositoryJDBCImpl(connection, telefoneRepository);
+            SeloRepository seloRepository = new SeloRepositoryJDBCImpl(connection);
 
             PublicadorEvento publicadorEventos = PublicadorEventoDefault.getInstance();
             publicadorEventos.adicionar(new AlunoMatriculadoLog());
+            publicadorEventos.adicionar(new GeraSeloAlunoNovato(seloRepository));
 
             var matricularAluno = new MatricularAluno(alunoRepository, publicadorEventos);
 

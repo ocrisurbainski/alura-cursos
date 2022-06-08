@@ -19,7 +19,7 @@ public class PublicadorEventoDefault implements PublicadorEvento {
 
     @Override
     public void publicar(Evento evento) {
-        this.ouvintes.forEach(ouvinteEvento -> ouvinteEvento.executar(evento));
+        this.ouvintes.forEach(ouvinteEvento -> ouvinteEvento.processar(evento));
     }
 
     public static PublicadorEventoDefault getInstance() {

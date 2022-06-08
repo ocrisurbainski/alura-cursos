@@ -2,6 +2,7 @@ package br.com.urbainski.escola.academico.dominio.aluno;
 
 import br.com.urbainski.escola.shared.dominio.evento.Evento;
 import br.com.urbainski.escola.shared.dominio.evento.OuvinteEvento;
+import br.com.urbainski.escola.shared.dominio.evento.TipoEventoEnum;
 
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
@@ -22,7 +23,7 @@ public class AlunoMatriculadoLog extends OuvinteEvento {
 
     @Override
     protected boolean deveExecutar(Evento evento) {
-        return evento instanceof AlunoMatriculadoEvento;
+        return TipoEventoEnum.ALUNO_MATRICULADO.equals(evento.getTipoEvento());
     }
 
 }
