@@ -3,7 +3,6 @@ package br.com.alura.forum.config.validacao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -15,10 +14,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ErroDeValidacaoHandler {
-	
-	@Autowired
-	private MessageSource messageSource;
-	
+
+	private final MessageSource messageSource;
+
+	public ErroDeValidacaoHandler(MessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
+
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public List<ErroDeFormularioDto> handle(MethodArgumentNotValidException exception) {

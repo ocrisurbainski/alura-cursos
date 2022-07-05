@@ -3,20 +3,24 @@ package br.com.alura.forum.controller.form;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.validator.constraints.Length;
 
 import br.com.alura.forum.modelo.Curso;
 import br.com.alura.forum.modelo.Topico;
 import br.com.alura.forum.repository.CursoRepository;
 
-public class TopicoForm {
+public class CadastroTopicoFormRequestDto {
 
+	@Schema(name = "titulo", description = "Título do tópico")
 	@NotNull @NotEmpty @Length(min = 5)
 	private String titulo;
-	
+
+	@Schema(name = "mensagem", description = "Mensagem do tópico")
 	@NotNull @NotEmpty @Length(min = 10)
 	private String mensagem;
-	
+
+	@Schema(name = "nomeCurso", description = "Nome do curso para vincular o tópico")
 	@NotNull @NotEmpty
 	private String nomeCurso;
 

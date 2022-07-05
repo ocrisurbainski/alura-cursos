@@ -7,18 +7,32 @@ import java.util.stream.Collectors;
 
 import br.com.alura.forum.modelo.StatusTopico;
 import br.com.alura.forum.modelo.Topico;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-public class DetalhesDoTopicoDto {
+public class DetalhesTopicoResponseDto {
 
-	private Long id;
-	private String titulo;
-	private String mensagem;
-	private LocalDateTime dataCriacao;
-	private String nomeAutor;
-	private StatusTopico status;
-	private List<RespostaDto> respostas;
+	@Schema(name = "id", description = "Identificador do tópico")
+	private final Long id;
+
+	@Schema(name = "titulo", description = "Título do tópico")
+	private final String titulo;
+
+	@Schema(name = "mensagem", description = "Mensagem do tópico")
+	private final String mensagem;
+
+	@Schema(name = "dataCriacao", description = "Data de criação do tópico")
+	private final LocalDateTime dataCriacao;
+
+	@Schema(name = "dataCriacao", description = "Data de criação do tópico")
+	private final String nomeAutor;
+
+	@Schema(name = "status", description = "Status do tópico")
+	private final StatusTopico status;
+
+	@Schema(name = "respostas", description = "Respostas do tópico")
+	private final List<RespostaDto> respostas;
 	
-	public DetalhesDoTopicoDto(Topico topico) {
+	public DetalhesTopicoResponseDto(Topico topico) {
 		this.id = topico.getId();
 		this.titulo = topico.getTitulo();
 		this.mensagem = topico.getMensagem();

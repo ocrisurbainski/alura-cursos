@@ -1,9 +1,14 @@
 package br.com.alura.forum.controller.form;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-public class LoginForm {
+public class LoginFormRequestDto {
+
+    @Schema(name = "email", description = "Email para identificar o usuário.", example = "aluno@email.com")
     private String email;
+
+    @Schema(name = "senha", description = "Senha para identificar o usuário.", example = "123456")
     private String senha;
 
     public String getEmail() {
