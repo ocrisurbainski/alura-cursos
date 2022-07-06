@@ -16,16 +16,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.annotation.security.RolesAllowed;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/topicos")
 public class TopicosController {
 
     private final TopicoRepository topicoRepository;
@@ -37,7 +38,7 @@ public class TopicosController {
         this.cursoRepository = cursoRepository;
     }
 
-    @GetMapping
+    @GetMapping("/public/topicos")
     @Cacheable(value = "listaDeTopicos")
     @Operation(
             operationId = "lista",
@@ -57,7 +58,7 @@ public class TopicosController {
         return TopicoResponseDto.converter(topicos);
     }
 
-    @PostMapping
+    @PostMapping("/topicos")
     @Transactional
     @CacheEvict(value = "listaDeTopicos", allEntries = true)
     @Operation(
@@ -77,7 +78,7 @@ public class TopicosController {
         return ResponseEntity.created(uri).body(new TopicoResponseDto(topico));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/public/topicos/{id}")
     @Operation(
             operationId = "detalhar",
             description = "Pesquisar um tópico pelo seu identificador.",
@@ -91,7 +92,7 @@ public class TopicosController {
         return topico.map(value -> ResponseEntity.ok(new DetalhesTopicoResponseDto(value))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/topicos/{id}")
     @Transactional
     @CacheEvict(value = "listaDeTopicos", allEntries = true)
     @Operation(
@@ -113,7 +114,7 @@ public class TopicosController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/topicos/{id}")
     @Transactional
     @CacheEvict(value = "listaDeTopicos", allEntries = true)
     @Operation(

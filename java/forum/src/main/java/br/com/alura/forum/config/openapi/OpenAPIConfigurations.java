@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenAPIConfigurations {
 
+    private static final String PUBLIC_PATH = "/public/**";
+
     @Value("${info.app.name}")
     private String infoAppName;
 
@@ -26,7 +28,7 @@ public class OpenAPIConfigurations {
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
                 .group("forum-public")
-                .pathsToMatch("/public/**")
+                .pathsToMatch(PUBLIC_PATH)
                 .displayName("Serviços públicos (não requer autenticação)")
                 .build();
     }
@@ -35,7 +37,7 @@ public class OpenAPIConfigurations {
     public GroupedOpenApi protectedApi() {
         return GroupedOpenApi.builder()
                 .group("forum-protected")
-                .pathsToExclude("/public/**")
+                .pathsToExclude(PUBLIC_PATH)
                 .displayName("Serviços protegidos (requer autenticação)")
                 .build();
     }
