@@ -7,10 +7,8 @@ public interface HelloController {
 
     @Operation(
             operationId = "hello",
-            description = "Método de exemplo para dizer olá ao usuário",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Sucesso na execução do método")
-            })
+            description = "Método de exemplo para dizer olá ao usuário")
+    @ApiResponse(responseCode = "200", description = "Sucesso na execução do método")
     String hello();
 
 }

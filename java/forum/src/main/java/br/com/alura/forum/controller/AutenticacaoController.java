@@ -10,11 +10,9 @@ public interface AutenticacaoController {
     
     @Operation(
             operationId = "autenticar",
-            description = "Método para que o usuário se autentique na aplicação e obtenha acesso as funcionalidades protegidas da aplicação.",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Usuário autenticado na aplicação."),
-                    @ApiResponse(responseCode = "400", description = "Não foi possível autenticar o usuário."),
-            })
+            description = "Método para que o usuário se autentique na aplicação e obtenha acesso as funcionalidades protegidas da aplicação.")
+    @ApiResponse(responseCode = "200", description = "Usuário autenticado na aplicação.")
+    @ApiResponse(responseCode = "400", description = "Não foi possível autenticar o usuário.")
     ResponseEntity<TokenResponseDto> autenticar(LoginFormRequestDto form);
 
 }
