@@ -4,8 +4,7 @@ import br.com.alura.forum.config.security.TokenService;
 import br.com.alura.forum.controller.AutenticacaoController;
 import br.com.alura.forum.controller.dto.TokenResponseDto;
 import br.com.alura.forum.controller.form.LoginFormRequestDto;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +19,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/public/auth")
+@Profile("remote")
 public class AutenticacaoControllerImpl implements AutenticacaoController {
 
     private final AuthenticationManager authenticationManager;

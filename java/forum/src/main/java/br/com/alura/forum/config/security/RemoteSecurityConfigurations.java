@@ -3,6 +3,7 @@ package br.com.alura.forum.config.security;
 import br.com.alura.forum.repository.UsuarioRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,7 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
+@Profile("remote")
+public class RemoteSecurityConfigurations extends WebSecurityConfigurerAdapter {
 
     private final AutenticacaoService autenticacaoService;
 
@@ -24,7 +26,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
     private final UsuarioRepository usuarioRepository;
 
-    public SecurityConfigurations(AutenticacaoService autenticacaoService, TokenService tokenService, UsuarioRepository usuarioRepository) {
+    public RemoteSecurityConfigurations(AutenticacaoService autenticacaoService, TokenService tokenService, UsuarioRepository usuarioRepository) {
         this.autenticacaoService = autenticacaoService;
         this.tokenService = tokenService;
         this.usuarioRepository = usuarioRepository;
