@@ -7,6 +7,7 @@ import br.com.alura.forum.controller.form.CadastroTopicoFormRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public interface TopicosController {
     @ApiResponse(responseCode = "200", description = "Sucesso ao fazer a pesquisa de tópicos.")
     Page<TopicoResponseDto> lista(
             @Parameter(name = "nomeCurso", description = "Nome do curso para pesquisar os tópicos.") String nomeCurso,
-            Pageable pageable);
+            @ParameterObject Pageable pageable);
 
     @Operation(operationId = "cadastrar", description = "Cadastrar novos tópicos no sistema.")
     @ApiResponse(responseCode = "201", description = "Sucesso ao cadastrar novo tópico.")
