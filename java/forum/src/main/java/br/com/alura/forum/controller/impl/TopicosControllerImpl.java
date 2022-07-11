@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -53,6 +54,7 @@ public class TopicosControllerImpl implements TopicosController {
     @PostMapping("/topicos")
     @Transactional
     @CacheEvict(value = "listaDeTopicos", allEntries = true)
+    @PreAuthorize("hasAnyRole()")
     public ResponseEntity<TopicoResponseDto> cadastrar(
             @RequestBody @Valid CadastroTopicoFormRequestDto form,
             UriComponentsBuilder uriBuilder) {
@@ -74,6 +76,7 @@ public class TopicosControllerImpl implements TopicosController {
     @PutMapping("/topicos/{id}")
     @Transactional
     @CacheEvict(value = "listaDeTopicos", allEntries = true)
+    @PreAuthorize("hasAnyRole()")
     public ResponseEntity<TopicoResponseDto> atualizar(
             @PathVariable Long id,
             @RequestBody @Valid AtualizacaoTopicoFormRequestDto form) {
@@ -90,6 +93,7 @@ public class TopicosControllerImpl implements TopicosController {
     @DeleteMapping("/topicos/{id}")
     @Transactional
     @CacheEvict(value = "listaDeTopicos", allEntries = true)
+    @PreAuthorize("hasRole('MODERADOR')")
     public ResponseEntity<?> remover(@PathVariable Long id) {
         Optional<Topico> optional = topicoRepository.findById(id);
         if (optional.isPresent()) {
