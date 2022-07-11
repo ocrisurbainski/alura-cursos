@@ -35,7 +35,102 @@ public class AutenticacaoControllerImplTest {
     private ObjectMapper objectMapper;
 
     @Test
-    public void deveriaDevolverStatus400CasoDadosDeAutenticacaoEstejamErrados() throws Exception {
+    public void deveriaDevolverStatus400CasoEmailSejaInvalido() throws Exception {
+        URI uri = new URI("/public/auth");
+
+        LoginFormRequestDto dto = new LoginFormRequestDto();
+        dto.setEmail("teste");
+        dto.setSenha("123456");
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post(uri)
+                .content(objectMapper.writeValueAsString(dto))
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.[0].campo", is("email")))
+                .andExpect(jsonPath("$.[0].erro", is("Valor informado é inválido.")));
+    }
+
+    @Test
+    public void deveriaDevolverStatus400CasoEmailEstejaNull() throws Exception {
+        URI uri = new URI("/public/auth");
+
+        LoginFormRequestDto dto = new LoginFormRequestDto();
+        dto.setEmail(null);
+        dto.setSenha("123456");
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post(uri)
+                .content(objectMapper.writeValueAsString(dto))
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.[0].campo", is("email")))
+                .andExpect(jsonPath("$.[0].erro", is("Valor não pode ser vazio.")));
+    }
+
+    @Test
+    public void deveriaDevolverStatus400CasoEmailEstejaVazio() throws Exception {
+        URI uri = new URI("/public/auth");
+
+        LoginFormRequestDto dto = new LoginFormRequestDto();
+        dto.setEmail("");
+        dto.setSenha("123456");
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post(uri)
+                .content(objectMapper.writeValueAsString(dto))
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.[0].campo", is("email")))
+                .andExpect(jsonPath("$.[0].erro", is("Valor não pode ser vazio.")));
+    }
+
+    @Test
+    public void deveriaDevolverStatus400CasoSenhaEstejaNull() throws Exception {
+        URI uri = new URI("/public/auth");
+
+        LoginFormRequestDto dto = new LoginFormRequestDto();
+        dto.setEmail("aluno@email.com");
+        dto.setSenha(null);
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post(uri)
+                .content(objectMapper.writeValueAsString(dto))
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.[0].campo", is("senha")))
+                .andExpect(jsonPath("$.[0].erro", is("Valor não pode ser vazio.")));
+    }
+
+    @Test
+    public void deveriaDevolverStatus400CasoSenhaEstejaVazio() throws Exception {
+        URI uri = new URI("/public/auth");
+
+        LoginFormRequestDto dto = new LoginFormRequestDto();
+        dto.setEmail("aluno@email.com");
+        dto.setSenha("");
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post(uri)
+                .content(objectMapper.writeValueAsString(dto))
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.[0].campo", is("senha")))
+                .andExpect(jsonPath("$.[0].erro", is("Deve ser informado no mínimo 1 carácter.")));
+    }
+
+    @Test
+    public void deveriaDevolverStatus400CasoNaoExistaUsuarioComOsDadosDeAutenticacao() throws Exception {
         URI uri = new URI("/public/auth");
 
         LoginFormRequestDto dto = new LoginFormRequestDto();
