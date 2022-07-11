@@ -19,7 +19,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/public/auth")
-@Profile("remote")
+@Profile({"remote", "test"})
 public class AutenticacaoControllerImpl implements AutenticacaoController {
 
     private final AuthenticationManager authenticationManager;

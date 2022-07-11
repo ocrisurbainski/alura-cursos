@@ -19,7 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Profile("remote")
+@Profile({"remote", "test"})
 public class ProfileRemoteSecurityConfigurations {
 
     private static final String[] AUTH_WHITELIST = {
