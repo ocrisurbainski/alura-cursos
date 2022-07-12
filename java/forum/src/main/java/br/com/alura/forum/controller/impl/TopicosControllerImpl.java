@@ -54,7 +54,7 @@ public class TopicosControllerImpl implements TopicosController {
     @PostMapping("/topicos")
     @Transactional
     @CacheEvict(value = "listaDeTopicos", allEntries = true)
-    @PreAuthorize("hasAnyRole()")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<TopicoResponseDto> cadastrar(
             @RequestBody @Valid CadastroTopicoFormRequestDto form,
             UriComponentsBuilder uriBuilder) {
@@ -76,7 +76,7 @@ public class TopicosControllerImpl implements TopicosController {
     @PutMapping("/topicos/{id}")
     @Transactional
     @CacheEvict(value = "listaDeTopicos", allEntries = true)
-    @PreAuthorize("hasAnyRole()")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<TopicoResponseDto> atualizar(
             @PathVariable Long id,
             @RequestBody @Valid AtualizacaoTopicoFormRequestDto form) {
