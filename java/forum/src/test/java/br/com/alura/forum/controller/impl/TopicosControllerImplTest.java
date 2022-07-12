@@ -1,5 +1,6 @@
 package br.com.alura.forum.controller.impl;
 
+import br.com.alura.forum.controller.form.AtualizacaoTopicoFormRequestDto;
 import br.com.alura.forum.controller.form.CadastroTopicoFormRequestDto;
 import br.com.alura.forum.modelo.Curso;
 import br.com.alura.forum.modelo.StatusTopico;
@@ -415,6 +416,183 @@ public class TopicosControllerImplTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].campo", is("nomeCurso")))
                 .andExpect(jsonPath("$[0].erro", is("Valor não pode ser vazio.")));
+    }
+
+    @Test
+    @WithMockUser(roles = "ALUNO")
+    public void deveriaDevolverStatus400AoTentarAtualizarUmTopicoQuandoTituloDoTopicoEstaNull() throws Exception {
+        AtualizacaoTopicoFormRequestDto dto = new AtualizacaoTopicoFormRequestDto();
+        dto.setMensagem("Mensagem de Teste");
+        dto.setTitulo(null);
+
+        URI uri = new URI("/topicos/1");
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put(uri)
+                .content(objectMapper.writeValueAsString(dto))
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].campo", is("titulo")))
+                .andExpect(jsonPath("$[0].erro", is("Valor não pode ser vazio.")))
+                .andExpect(jsonPath("$[1].campo", is("titulo")))
+                .andExpect(jsonPath("$[1].erro", is("Valor não pode ser vazio.")));
+    }
+
+    @Test
+    @WithMockUser(roles = "ALUNO")
+    public void deveriaDevolverStatus400AoTentarAtualizarUmTopicoQuandoTituloDoTopicoEstaVazio() throws Exception {
+        AtualizacaoTopicoFormRequestDto dto = new AtualizacaoTopicoFormRequestDto();
+        dto.setMensagem("Mensagem de Teste");
+        dto.setTitulo("");
+
+        URI uri = new URI("/topicos/1");
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put(uri)
+                .content(objectMapper.writeValueAsString(dto))
+                .contentType(MediaType.APPLICATION_JSON);
+
+        LinkedHashMap<String, String> retornoEsperado1 = new LinkedHashMap<String, String>() {{
+            put("campo", "titulo");
+            put("erro", "Valor deve ter tamanho entre 5 e 2147483647.");
+        }};
+
+        LinkedHashMap<String, String> retornoEsperado2 = new LinkedHashMap<String, String>() {{
+            put("campo", "titulo");
+            put("erro", "Valor não pode ser vazio.");
+        }};
+
+        mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", hasItems(retornoEsperado1, retornoEsperado2)));
+    }
+
+    @Test
+    @WithMockUser(roles = "ALUNO")
+    public void deveriaDevolverStatus400AoTentarAtualizarUmTopicoQuandoTituloDoTopicoNaoEstaVazioMasTemMenosDeCincoCaracteres() throws Exception {
+        AtualizacaoTopicoFormRequestDto dto = new AtualizacaoTopicoFormRequestDto();
+        dto.setMensagem("Mensagem de Teste");
+        dto.setTitulo("ABC");
+
+        URI uri = new URI("/topicos/1");
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put(uri)
+                .content(objectMapper.writeValueAsString(dto))
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].campo", is("titulo")))
+                .andExpect(jsonPath("$[0].erro", is("Valor deve ter tamanho entre 5 e 2147483647.")));
+    }
+
+    @Test
+    @WithMockUser(roles = "ALUNO")
+    public void deveriaDevolverStatus400AoTentarAtualizarUmTopicoQuandoMensagemDoTopicoEstaNull() throws Exception {
+        AtualizacaoTopicoFormRequestDto dto = new AtualizacaoTopicoFormRequestDto();
+        dto.setMensagem(null);
+        dto.setTitulo("Titulo");
+
+        URI uri = new URI("/topicos/1");
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put(uri)
+                .content(objectMapper.writeValueAsString(dto))
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].campo", is("mensagem")))
+                .andExpect(jsonPath("$[0].erro", is("Valor não pode ser vazio.")))
+                .andExpect(jsonPath("$[1].campo", is("mensagem")))
+                .andExpect(jsonPath("$[1].erro", is("Valor não pode ser vazio.")));
+    }
+
+    @Test
+    @WithMockUser(roles = "ALUNO")
+    public void deveriaDevolverStatus400AoTentarAtualizarUmTopicoQuandoMensagemDoTopicoEstaVazio() throws Exception {
+        AtualizacaoTopicoFormRequestDto dto = new AtualizacaoTopicoFormRequestDto();
+        dto.setMensagem("");
+        dto.setTitulo("Titulo");
+
+        URI uri = new URI("/topicos/1");
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put(uri)
+                .content(objectMapper.writeValueAsString(dto))
+                .contentType(MediaType.APPLICATION_JSON);
+
+        LinkedHashMap<String, String> retornoEsperado1 = new LinkedHashMap<String, String>() {{
+            put("campo", "mensagem");
+            put("erro", "Valor não pode ser vazio.");
+        }};
+
+        LinkedHashMap<String, String> retornoEsperado2 = new LinkedHashMap<String, String>() {{
+            put("campo", "mensagem");
+            put("erro", "Valor deve ter tamanho entre 10 e 2147483647.");
+        }};
+
+        mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", hasItems(retornoEsperado1, retornoEsperado2)));
+    }
+
+    @Test
+    @WithMockUser(roles = "ALUNO")
+    public void deveriaDevolverStatus400AoTentarAtualizarUmTopicoQuandoMensagemDoTopicoNaoEstaVazioMasTemMenosDeDezCaracteres() throws Exception {
+        AtualizacaoTopicoFormRequestDto dto = new AtualizacaoTopicoFormRequestDto();
+        dto.setMensagem("Mensagem");
+        dto.setTitulo("Titulo");
+
+        URI uri = new URI("/topicos/1");
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put(uri)
+                .content(objectMapper.writeValueAsString(dto))
+                .contentType(MediaType.APPLICATION_JSON);
+
+        LinkedHashMap<String, String> retornoEsperado1 = new LinkedHashMap<String, String>() {{
+            put("campo", "mensagem");
+            put("erro", "Valor deve ter tamanho entre 10 e 2147483647.");
+        }};
+
+        mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$", hasItems(retornoEsperado1)));
+    }
+
+    @Test
+    @WithMockUser(roles = "ALUNO")
+    public void deveriaDevolverStatus404AoTentarAtualizarUmTopicoQuandoIdentificadorNaoExistirNoBancoDeDados() throws Exception {
+        AtualizacaoTopicoFormRequestDto dto = new AtualizacaoTopicoFormRequestDto();
+        dto.setMensagem("Mensagem de Teste");
+        dto.setTitulo("Titulo");
+
+        URI uri = new URI("/topicos/9999");
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put(uri)
+                .content(objectMapper.writeValueAsString(dto))
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isNotFound());
     }
 
 }
