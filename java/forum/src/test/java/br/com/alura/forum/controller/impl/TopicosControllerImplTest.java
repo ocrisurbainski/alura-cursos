@@ -126,7 +126,7 @@ public class TopicosControllerImplTest {
 
     @Test
     @WithMockUser(roles = "MODERADOR")
-    public void deveriaDevolverUmStatus404QuandoTentarRemoverUmTopicoPorIdentificadorQueNaoExisteUmTopicoNoBancoDeDados() throws Exception {
+    public void deveriaDevolverUmStatus404AoRemoverUmTopicoQuandoTentarRemoverUmTopicoPorIdentificadorQueNaoExisteUmTopicoNoBancoDeDados() throws Exception {
         URI uri = new URI("/topicos/99999");
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete(uri);
@@ -138,7 +138,7 @@ public class TopicosControllerImplTest {
 
     @Test
     @WithMockUser(roles = "ALUNO")
-    public void deveriaDevolverUmStatus403QuandoUmUsuarioComRoleDeAlunoTentarRemoverUmTopicoPorIdentificador() throws Exception {
+    public void deveriaDevolverUmStatus403AoRemoverUmTopicoQuandoUmUsuarioComRoleDeAlunoTentarRemoverUmTopicoPorIdentificador() throws Exception {
         URI uri = new URI("/topicos/99999");
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete(uri);
@@ -150,7 +150,7 @@ public class TopicosControllerImplTest {
 
     @Test
     @WithMockUser(roles = "MODERADOR")
-    public void deveriaDevolverRemoverUmTopicoPeloSeuIdentificador() throws Exception {
+    public void deveriaDevolverStatus200AoRemoverUmTopicoPeloSeuIdentificador() throws Exception {
         Curso curso = cursoRepository.findByNome("Spring Boot");
 
         Topico topico = new Topico();
@@ -174,7 +174,7 @@ public class TopicosControllerImplTest {
 
     @Test
     @WithMockUser(roles = "ALUNO")
-    public void deveriaCadastrarComSucessoUmTopico() throws Exception {
+    public void deveriaDevolverStatus201AoTentarCadastrarUmTopico() throws Exception {
         CadastroTopicoFormRequestDto dto = new CadastroTopicoFormRequestDto();
         dto.setMensagem("Mensagem de Teste");
         dto.setNomeCurso("Spring Boot");
@@ -207,7 +207,7 @@ public class TopicosControllerImplTest {
 
     @Test
     @WithMockUser(roles = "ALUNO")
-    public void deveriaDevolverStatus400QuandoTituloDoTopicoEstaNull() throws Exception {
+    public void deveriaDevolverStatus400AoTentarCadastrarUmTopicoQuandoTituloDoTopicoEstaNull() throws Exception {
         CadastroTopicoFormRequestDto dto = new CadastroTopicoFormRequestDto();
         dto.setMensagem("Mensagem de Teste");
         dto.setNomeCurso("Spring Boot");
@@ -232,7 +232,7 @@ public class TopicosControllerImplTest {
 
     @Test
     @WithMockUser(roles = "ALUNO")
-    public void deveriaDevolverStatus400QuandoTituloDoTopicoEstaVazio() throws Exception {
+    public void deveriaDevolverStatus400AoTentarCadastrarUmTopicoQuandoTituloDoTopicoEstaVazio() throws Exception {
         CadastroTopicoFormRequestDto dto = new CadastroTopicoFormRequestDto();
         dto.setMensagem("Mensagem de Teste");
         dto.setNomeCurso("Spring Boot");
@@ -264,7 +264,7 @@ public class TopicosControllerImplTest {
 
     @Test
     @WithMockUser(roles = "ALUNO")
-    public void deveriaDevolverStatus400QuandoTituloDoTopicoNaoEstaVazioMasTemMenosDeCincoCaracteres() throws Exception {
+    public void deveriaDevolverStatus400AoTentarCadastrarUmTopicoQuandoTituloDoTopicoNaoEstaVazioMasTemMenosDeCincoCaracteres() throws Exception {
         CadastroTopicoFormRequestDto dto = new CadastroTopicoFormRequestDto();
         dto.setMensagem("Mensagem de Teste");
         dto.setNomeCurso("Spring Boot");
@@ -287,7 +287,7 @@ public class TopicosControllerImplTest {
 
     @Test
     @WithMockUser(roles = "ALUNO")
-    public void deveriaDevolverStatus400QuandoMensagemDoTopicoEstaNull() throws Exception {
+    public void deveriaDevolverStatus400AoTentarCadastrarUmTopicoQuandoMensagemDoTopicoEstaNull() throws Exception {
         CadastroTopicoFormRequestDto dto = new CadastroTopicoFormRequestDto();
         dto.setMensagem(null);
         dto.setNomeCurso("Spring Boot");
@@ -312,7 +312,7 @@ public class TopicosControllerImplTest {
 
     @Test
     @WithMockUser(roles = "ALUNO")
-    public void deveriaDevolverStatus400QuandoMensagemDoTopicoEstaVazio() throws Exception {
+    public void deveriaDevolverStatus400AoTentarCadastrarUmTopicoQuandoMensagemDoTopicoEstaVazio() throws Exception {
         CadastroTopicoFormRequestDto dto = new CadastroTopicoFormRequestDto();
         dto.setMensagem("");
         dto.setNomeCurso("Spring Boot");
@@ -344,7 +344,7 @@ public class TopicosControllerImplTest {
 
     @Test
     @WithMockUser(roles = "ALUNO")
-    public void deveriaDevolverStatus400QuandoMensagemDoTopicoNaoEstaVazioMasTemMenosDeDezCaracteres() throws Exception {
+    public void deveriaDevolverStatus400AoTentarCadastrarUmTopicoQuandoMensagemDoTopicoNaoEstaVazioMasTemMenosDeDezCaracteres() throws Exception {
         CadastroTopicoFormRequestDto dto = new CadastroTopicoFormRequestDto();
         dto.setMensagem("Mensagem");
         dto.setNomeCurso("Spring Boot");
@@ -371,7 +371,7 @@ public class TopicosControllerImplTest {
 
     @Test
     @WithMockUser(roles = "ALUNO")
-    public void deveriaDevolverStatus400QuandoNomeDoCursoDoTopicoEstaNull() throws Exception {
+    public void deveriaDevolverStatus400AoTentarCadastrarUmTopicoQuandoNomeDoCursoDoTopicoEstaNull() throws Exception {
         CadastroTopicoFormRequestDto dto = new CadastroTopicoFormRequestDto();
         dto.setMensagem("Mensagem de Teste");
         dto.setNomeCurso(null);
@@ -396,7 +396,7 @@ public class TopicosControllerImplTest {
 
     @Test
     @WithMockUser(roles = "ALUNO")
-    public void deveriaDevolverStatus400QuandoNomeDoCursoDoTopicoEstaVazio() throws Exception {
+    public void deveriaDevolverStatus400AoTentarCadastrarUmTopicoQuandoNomeDoCursoDoTopicoEstaVazio() throws Exception {
         CadastroTopicoFormRequestDto dto = new CadastroTopicoFormRequestDto();
         dto.setMensagem("Mensagem de Teste");
         dto.setNomeCurso("");
