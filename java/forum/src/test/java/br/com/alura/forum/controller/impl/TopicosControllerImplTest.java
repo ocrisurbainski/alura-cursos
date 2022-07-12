@@ -595,4 +595,45 @@ public class TopicosControllerImplTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    @WithMockUser(roles = "ALUNO")
+    public void deveriaDevolverStatus200AoTentarAtualizarUmTopico() throws Exception {
+        Curso curso = cursoRepository.findByNome("Spring Boot");
+
+        Topico topico = new Topico();
+        topico.setCurso(curso);
+        topico.setDataCriacao(LocalDateTime.now());
+        topico.setTitulo("Topico Teste");
+        topico.setMensagem("Topico Teste");
+        topico.setAutor(usuarioRepository.findAll().get(0));
+        topico.setStatus(StatusTopico.NAO_RESPONDIDO);
+
+        topico = topicoRepository.save(topico);
+
+        AtualizacaoTopicoFormRequestDto dto = new AtualizacaoTopicoFormRequestDto();
+        dto.setMensagem("Mensagem de Teste");
+        dto.setTitulo("Titulo de Teste");
+
+        URI uri = new URI("/topicos/" + topico.getId());
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put(uri)
+                .content(objectMapper.writeValueAsString(dto))
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.titulo", is("Titulo de Teste")))
+                .andExpect(jsonPath("$.mensagem", is("Mensagem de Teste")))
+                .andReturn();
+
+        if (HttpStatus.OK.value() == result.getResponse().getStatus()) {
+            TypeReference<HashMap<String, Object>> typeReference = new TypeReference<HashMap<String, Object>>() {
+            };
+            Map<String, Object> dados = objectMapper.readValue(result.getResponse().getContentAsString(), typeReference);
+            topicoRepository.deleteById(((Integer) dados.get("id")).longValue());
+        }
+    }
+
 }
